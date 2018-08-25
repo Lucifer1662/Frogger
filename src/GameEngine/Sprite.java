@@ -1,6 +1,5 @@
 package GameEngine;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
@@ -10,7 +9,7 @@ public class Sprite extends Component {
 	private Image image;
 	
 	@Override
-	public void render(GameContainer container, Graphics graphics) throws SlickException {
+	public void render() throws SlickException {
 		Vector2f pos1 = new Vector2f(width,height);
 		Vector2f pos2 = new Vector2f(-width,-height);
 		
@@ -20,6 +19,7 @@ public class Sprite extends Component {
 		
 		image.draw(pos1.x, pos1.y,
 				pos2.x - pos1.x, pos2.y - pos1.y);
+		System.out.println(pos1.x);
 	}
 
 	public Image getImage() {
@@ -28,6 +28,14 @@ public class Sprite extends Component {
 
 	public void setImage(Image image) {
 		this.image = image;
+	}
+	
+	public void setImage(String path) {
+		try {
+			this.image = new Image(path);
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

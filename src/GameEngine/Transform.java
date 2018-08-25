@@ -19,7 +19,7 @@ public class Transform extends Component{
 
 		
 		public Transform(Vector2f pos, Vector2f scale, float angleOfRotation){
-			Init();
+			InitializeProperties();
 			setPosition(pos);
 			setScale(scale);
 			setRotation(angleOfRotation);
@@ -27,10 +27,10 @@ public class Transform extends Component{
 		
 		
 		public Transform(){
-			Init();			
+			InitializeProperties();			
 		}
 		
-		private void Init() {
+		private void InitializeProperties() {
 			position = new Vector2f();
 			scale = new Vector2f();
 			translationMat = new Matrix3f();
@@ -51,7 +51,7 @@ public class Transform extends Component{
 		}
 		
 		
-		private void UpdateTransformationMatrix() {
+		public void UpdateTransformationMatrix() {
 		
 			Matrix3f.mul(translationMat, rotationMat, transformMat);
 			Matrix3f.mul(transformMat, scaleMat, transformMat);

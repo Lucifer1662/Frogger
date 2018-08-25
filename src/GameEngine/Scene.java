@@ -1,6 +1,5 @@
 package GameEngine;
 
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -14,24 +13,24 @@ public abstract class Scene{
 		worldRoot = new WorldRoot(this, null);
 	}
 	
-	final void Init(Window container) throws SlickException {
-		worldRoot.Init(container);			
-		init(container);
+	final void Init() throws SlickException {
+		//worldRoot.Init();			
+		init();
 	}
 
-	final void Render(Window window, Graphics graphics) throws SlickException {
-		worldRoot.Render(window, graphics);
-		render(window, graphics);
+	final void Render() throws SlickException {
+		worldRoot.Render();
+		render();
 	}
 
-	final void Update(Window window) throws SlickException {
-		worldRoot.Update(window);
-		update(window);
+	final void Update() throws SlickException {
+		worldRoot.Update();
+		update();
 	}
 	
-	public void init(Window container) throws SlickException {}
-	public void render(Window window, Graphics graphics) throws SlickException {}
-	public void update(Window window) throws SlickException {}
+	public void init() throws SlickException {}
+	public void render() throws SlickException {}
+	public void update() throws SlickException {}
 	
 	
 	
@@ -47,7 +46,9 @@ public abstract class Scene{
 		return Instantiate(posx, posy,1, 1, 0);
 	}
 	
-	
+	public WorldRoot getWorldRoot() {
+		return worldRoot;
+	}
 
 	public Game getGame() {
 		return game;

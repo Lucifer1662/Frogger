@@ -1,7 +1,6 @@
 package GameEngine;
 import java.util.ArrayList;
 import java.util.function.Supplier;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -12,9 +11,9 @@ public class GameObject {
 	private Transform transform;
 	private Scene scene;
 	private Window window;
+
 	
-	public <T extends Component> T AddComponent(Supplier<T> s) {
-		T component = s.get();
+	public <T extends Component> T AddComponent(T component) {
 		components.add(component);
 		component.SetGameObjectAttachedTo(this);
 		return component;
@@ -38,14 +37,20 @@ public class GameObject {
 		return components.get(index);
 	}
 	
-	public GameObject(Scene scene, GameObject parent){
-		window = scene.getGame().getWidow();
-		this.scene = scene;
+	public GameObject() {
 		children = new ArrayList<GameObject>();
 		components = new ArrayList<Component>();
-		transform = this.AddComponent(Transform::new);
+		transform = this.AddComponent(new Transform());
+	}
+	
+	public GameObject(Scene scene, GameObject parent){
+		this();
+		window = scene.getGame().getWidow();
+		this.scene = scene;
 		setParent(parent);
 	}	
+	
+
 	
 	public GameObject(Scene scene, GameObject parent, Vector2f pos, Vector2f scale, float angleOfRotation){
 		this(scene, parent, pos.x, pos.y, scale.x, scale.y, angleOfRotation);
@@ -58,55 +63,51 @@ public class GameObject {
 
 	
 	
-	public void Render(Window window, Graphics graphics) throws SlickException {
+	public final void Render() throws SlickException {
 		for(Component component : components)	{
-			component.render(window, graphics);
+			component.render();
 		}
 		for(GameObject gameObject : children)	{
-			gameObject.Render(window, graphics);
+			gameObject.Render();
 		}
-		render(window, graphics);
+		render();
 	}
 
-	public void Init(Window window) throws SlickException {
-		for(Component component : components)	{
-			component.init(window);
-		}
-		for(GameObject gameObject : children)	{
-			gameObject.Init(window);
-		}
-		init(window);
-	}
 
-	public void Update(Window window) throws SlickException {
+	public final void Update() throws SlickException {
 		for(Component component : components)	{
-			component.update(window);
+			component.update();
 		}
 		for(GameObject gameObject : children)	{
-			gameObject.Update(window);
+			gameObject.Update();
 		}
-		update(window);
+		update();
 	}
 	
-	public void render(Window window, Graphics graphics) throws SlickException {}
-	public void init(Window window) throws SlickException {}
-	public void update(Window window) throws SlickException {}
+	public void render() throws SlickException {}
+	public void update() throws SlickException {}
 
 	public GameObject getParent() {
 		return parent;
 	}
 
 	public void setParent(GameObject parent) {
-		//Add me to the new parent
-		if(parent != null)
-			parent.children.add(this);
-		
 		//Remove me from old parent
 		if(this.parent != null) 
 			this.parent.removeChild(this);
 		
 		//set my new parent
 		this.parent = parent;
+		
+		//Add me to the new parent
+		if(parent != null) {
+			parent.children.add(this);
+			getTransform().UpdateTransformationMatrix();
+		}
+		
+	
+		
+		
 	}
 	
 	public boolean removeChild(GameObject gameObject) {
@@ -124,9 +125,10 @@ public class GameObject {
 	}
 	
 	public void setScene(Scene scene) {
-		//Setting parent to null is equivalent to removing seen
-		//as it is the only thing tying me here
-		setParent(null);
+		//Changing parent to a new world root
+		//is equivalent to swapping scenes
+		if(scene != null)
+			setParent(scene.getWorldRoot());
 		
 		//Change scene,and change into scenes window
 		this.scene = scene;

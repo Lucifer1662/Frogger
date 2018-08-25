@@ -38,25 +38,30 @@ public class Game extends BasicGame {
 	private void PrepareScenesLoadedFromFile(String filePah) {
 		
 	}
-
-	
 	
 	@Override
-	public void init(GameContainer container) throws SlickException {
-		currentScene.Init((Window)container);
+	public final void render(GameContainer container, Graphics graphics) throws SlickException {
+		currentScene.Render();
+		Render();
 	}
 	
 	@Override
-	public void render(GameContainer container, Graphics graphics) throws SlickException {
-		currentScene.Render((Window)container, graphics);
-	}
-	
-	@Override
-	public void update(GameContainer container, int timeDeltaInMilliSeconds) throws SlickException {
-		currentScene.Update((Window)container);
+	public final void update(GameContainer container, int timeDeltaInMilliSeconds) throws SlickException {
+		currentScene.Update();
 		timeDelta = timeDeltaInMilliSeconds * MILLISECONDS_IN_A_SECOND;
+		Update();
+	}
+	
+	@Override
+	public final void init(GameContainer arg0) throws SlickException {
+		Init();
 	}
 
+	
+	public void Render() throws SlickException {}
+	public void Update() throws SlickException {}
+	public void Init() throws SlickException {};
+	
 	public float getTimeDelta() {
 		return timeDelta;
 	}
@@ -70,6 +75,8 @@ public class Game extends BasicGame {
 			this.window.setGame(null);
 		this.window = window;
 	}
+
+	
 
 
 }

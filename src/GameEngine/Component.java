@@ -1,6 +1,4 @@
 package GameEngine;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 public abstract class Component {
@@ -11,9 +9,8 @@ public abstract class Component {
 	
 	private GameObject gameObject;	
 	
-	public void render(GameContainer container, Graphics graphics) throws SlickException {}
-	public void init(GameContainer container) throws SlickException {}
-	public void update(GameContainer container) throws SlickException {}
+	public void render() throws SlickException {}
+	public void update() throws SlickException {}
 		
 	public GameObject getGameObject() {
 		return gameObject;
