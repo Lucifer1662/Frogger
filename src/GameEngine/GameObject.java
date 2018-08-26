@@ -4,7 +4,10 @@ import java.util.function.Supplier;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-public class GameObject {
+import GameEngine.Collision.Collider;
+import GameEngine.Collision.ICollision;
+
+public class GameObject implements ICollision, IOnRootChanged {
 	ArrayList<Component> components;
 	private ArrayList<GameObject> children;
 	private GameObject parent;
@@ -15,7 +18,7 @@ public class GameObject {
 	
 	public <T extends Component> T AddComponent(T component) {
 		components.add(component);
-		component.SetGameObjectAttachedTo(this);
+		component.setGameObjectAttachedTo(this);
 		return component;
 	}
 	
@@ -23,17 +26,16 @@ public class GameObject {
 		return new ArrayList<GameObject>(children);
 	}
 	
-	public boolean RemoveComponent(Object component){
+	public boolean removeComponent(Object component){
 		return components.remove(component);
 	}
 	
-	public Component RemoveComponent(int index){
-	
+	public Component removeComponent(int index){
 		return components.remove(index);
 	}
 	
 
-	public Component GetComponent(int index) {
+	public Component getComponent(int index) {
 		return components.get(index);
 	}
 	
@@ -63,25 +65,34 @@ public class GameObject {
 
 	
 	
-	public final void Render() throws SlickException {
-		for(Component component : components)	{
+	public final void _render() throws SlickException {
+		for(Component component : components)	
 			component.render();
-		}
-		for(GameObject gameObject : children)	{
-			gameObject.Render();
-		}
+		
+		for(GameObject gameObject : children)	
+			gameObject._render();
+
 		render();
 	}
 
 
-	public final void Update() throws SlickException {
-		for(Component component : components)	{
+	public final void _update() throws SlickException {
+		for(Component component : components)	
 			component.update();
-		}
-		for(GameObject gameObject : children)	{
-			gameObject.Update();
-		}
+
+		for(GameObject gameObject : children)	
+			gameObject._update();
+
 		update();
+	}
+	
+	@Override
+	public void onCollision(Collider collider) {
+		for(Component component : components)
+			component.onCollision(collider);
+		
+		for(GameObject gameObject : children)
+			gameObject.onCollision(collider);
 	}
 	
 	public void render() throws SlickException {}
@@ -102,12 +113,18 @@ public class GameObject {
 		//Add me to the new parent
 		if(parent != null) {
 			parent.children.add(this);
-			getTransform().UpdateTransformationMatrix();
-		}
-		
+		}	
+		getTransform().UpdateTransformationMatrix();
+		onRootChanged(parent);
+	}
 	
-		
-		
+	@Override
+	public void onRootChanged(GameObject root) {
+		for(Component component : components)
+			component.onRootChanged(root);
+			
+		for(GameObject gameObject : children)
+			gameObject.onRootChanged(root);
 	}
 	
 	public boolean removeChild(GameObject gameObject) {
@@ -133,6 +150,10 @@ public class GameObject {
 		//Change scene,and change into scenes window
 		this.scene = scene;
 		this.window = scene.getGame().getWidow();
+	}
+
+	public static boolean canGetScene(GameObject obj) {
+		return obj != null && obj.getScene() != null;
 	}
 	
 	

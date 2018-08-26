@@ -1,30 +1,33 @@
 package GameEngine;
 
+import java.util.List;
+
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
+import GameEngine.Collision.ColliderSpace;
+
 public abstract class Scene{
 	private WorldRoot worldRoot;
+	private ColliderSpace colliderSpace;
 	
 	Game game;
 	
 	public Scene(Game game) {
 		this.game = game;
 		worldRoot = new WorldRoot(this, null);
+		colliderSpace = new ColliderSpace();
 	}
 	
-	final void Init() throws SlickException {
-		//worldRoot.Init();			
-		init();
-	}
 
-	final void Render() throws SlickException {
-		worldRoot.Render();
+	final void _render() throws SlickException {
+		worldRoot._render();
 		render();
 	}
 
-	final void Update() throws SlickException {
-		worldRoot.Update();
+	final void _update() throws SlickException {
+		worldRoot._update();
+		colliderSpace.testCollision();
 		update();
 	}
 	
@@ -56,6 +59,10 @@ public abstract class Scene{
 	public void setGame(Game game) {
 		game.RemoveScene(this);
 		this.game = game;
+	}
+
+	public ColliderSpace getColliderSpace() {
+		return colliderSpace;
 	}
 	
 	

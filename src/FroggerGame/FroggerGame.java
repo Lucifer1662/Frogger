@@ -12,15 +12,15 @@ public class FroggerGame extends Game {
 	}
 	
 	@Override
-	public void Init() {
+	public void onStart() {
 		MainLevelScene mainLevel = new MainLevelScene(this);
 		Frog frog = new Frog();
 		frog.setScene(mainLevel);
-		frog.getTransform().setPosition(0,-4.5f);
+		frog.getTransform().setPosition(0,0);
 		
 		
-		Bus bus = new Bus();
-		bus.setScene(mainLevel);
+		//Bus bus = new Bus();
+		//bus.setScene(mainLevel);
 		
 		SetCurrentScene(mainLevel);
 	}

@@ -1,6 +1,7 @@
 package GameEngine;
 import java.nio.FloatBuffer;
 
+import org.lwjgl.util.vector.Matrix2f;
 import org.lwjgl.util.vector.Matrix3f;
 import org.lwjgl.util.vector.Vector3f;
 import org.newdawn.slick.geom.Vector2f;
@@ -16,6 +17,7 @@ public class Transform extends Component{
 		private Vector2f position;
 		private float rotation;
 		private Vector2f scale;
+		private Vector2f worldPosition;
 
 		
 		public Transform(Vector2f pos, Vector2f scale, float angleOfRotation){
@@ -37,6 +39,7 @@ public class Transform extends Component{
 			rotationMat = new Matrix3f();
 			scaleMat = new Matrix3f();
 			transformMat = new Matrix3f();	
+			worldPosition = new Vector2f();
 		}
 		
 		
@@ -49,14 +52,18 @@ public class Transform extends Component{
 		public float getRotation() {
 			return rotation;
 		}
+		public Vector2f getWorldPosition() {
+			return new Vector2f(worldPosition);
+		}
 		
 		
 		public void UpdateTransformationMatrix() {
-		
 			Matrix3f.mul(translationMat, rotationMat, transformMat);
 			Matrix3f.mul(transformMat, scaleMat, transformMat);
 			if(getGameObject().getParent() != null) {
-				Matrix3f.mul(getGameObject().getParent().getTransform().transformMat, transformMat, transformMat);
+				Transform parentTransform = getGameObject().getParent().getTransform();
+				Matrix3f.mul(parentTransform.transformMat, transformMat, transformMat);
+				worldPosition = parentTransform.worldPosition.add(position);
 			}
 			for(GameObject child : getGameObject().getChildren()) {
 				child.getTransform().UpdateTransformationMatrix();
@@ -64,9 +71,9 @@ public class Transform extends Component{
 		}
 		
 		public void Apply(float posx, float posy, float scalex, float scaley, float angleOfRotation){
-			_Translate(posx,posy);
-			_Scale(scalex, scaley);
-			_Rotate(angleOfRotation);
+			translate(posx,posy);
+			scale(scalex, scaley);
+			rotate(angleOfRotation);
 			UpdateTransformationMatrix();
 		}
 	
@@ -79,11 +86,11 @@ public class Transform extends Component{
 		}
 		
 		public void setPosition(float posx, float posy) {
-			_Translate(posx, posy);
+			translate(posx, posy);
 			UpdateTransformationMatrix();
 		}
 		
-		private void _Translate(float posx, float posy) {
+		private void translate(float posx, float posy) {
 			position.x = posx;
 			position.y = posy;
 			
@@ -99,27 +106,25 @@ public class Transform extends Component{
 		}
 		
 		public void setScale(float scalex, float scaley) {
-			_Scale(scalex, scaley);			
+			scale(scalex, scaley);			
 			UpdateTransformationMatrix();
 		}
 		
-		private void _Scale(float scalex, float scaley) {
+		private void scale(float scalex, float scaley) {
 			scale.x = scalex;
 			scale.y = scaley;
 			
 			scaleMat.loadTranspose(FloatBuffer.wrap(org.newdawn.slick.geom.Transform
 					.createScaleTransform(scalex, scaley).getMatrixPosition()));
-			
-			UpdateTransformationMatrix();
 		}
 		
 		
 		public void setRotation(float angle) {
-			_Rotate(angle);
+			rotate(angle);
 			UpdateTransformationMatrix();
 		}
 		
-		private void _Rotate(float angle) {
+		private void rotate(float angle) {
 			rotation = angle;
 			rotationMat.loadTranspose(FloatBuffer.wrap(org.newdawn.slick.geom.Transform
 					.createRotateTransform(angle).getMatrixPosition()));
@@ -127,10 +132,17 @@ public class Transform extends Component{
 
 		
 		
-		public void Mult(Vector2f point) {
+		public void transform(Vector2f point) {
 			Vector3f p = new Vector3f(point.x, point.y, 1);
 			Matrix3f.transform(transformMat, p, p);
 			point.x = p.x;
 			point.y = p.y;
+		}
+		
+		public void transform(Vector2f point, Vector2f res) {
+			Vector3f p = new Vector3f(point.x, point.y, 1);
+			Matrix3f.transform(transformMat, p, p);
+			res.x = p.x;
+			res.y = p.y;
 		}
 	}

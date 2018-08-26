@@ -41,26 +41,26 @@ public class Game extends BasicGame {
 	
 	@Override
 	public final void render(GameContainer container, Graphics graphics) throws SlickException {
-		currentScene.Render();
-		Render();
+		currentScene._render();
+		onDraw();
 	}
 	
 	@Override
 	public final void update(GameContainer container, int timeDeltaInMilliSeconds) throws SlickException {
-		currentScene.Update();
+		currentScene._update();
 		timeDelta = timeDeltaInMilliSeconds * MILLISECONDS_IN_A_SECOND;
-		Update();
+		onUpdate();
 	}
 	
 	@Override
 	public final void init(GameContainer arg0) throws SlickException {
-		Init();
+		onStart();
 	}
 
 	
-	public void Render() throws SlickException {}
-	public void Update() throws SlickException {}
-	public void Init() throws SlickException {};
+	public void onDraw() throws SlickException {}
+	public void onUpdate() throws SlickException {}
+	public void onStart() throws SlickException {};
 	
 	public float getTimeDelta() {
 		return timeDelta;

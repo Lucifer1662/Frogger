@@ -1,0 +1,20 @@
+Make sure child objects render ontop
+Make sure children lower index render first and their children
+Add IRender
+Add IUpdate
+
+Make All all Methods LowerCase
+
+Add BusController
+
+Add Collision
+
+Take Sprite out of frog component
+Remove Bus, implement raw sprite
+Implement BackGround
+
+
+
+
+Add Entity
+Implement GUI
