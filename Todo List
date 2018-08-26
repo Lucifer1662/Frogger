@@ -1,8 +1,3 @@
-Make sure child objects render ontop
-Make sure children lower index render first and their children
-Add IRender
-Add IUpdate
-
 Make All all Methods LowerCase
 
 Add BusController

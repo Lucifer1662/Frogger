@@ -66,12 +66,14 @@ public class GameObject implements ICollision, IOnRootChanged {
 	
 	
 	public final void _render() throws SlickException {
+		//Render the parent components first so that are on the bottom
+		//of the children		
 		for(Component component : components)	
 			component.render();
 		
 		for(GameObject gameObject : children)	
 			gameObject._render();
-
+		
 		render();
 	}
 

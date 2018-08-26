@@ -68,8 +68,17 @@ public class BoundingBox extends Collider{
 		max.x = getRight();
 		max.y = this.top;
 		min.y = getBottom();
-		getGameObject().getTransform().transform(min);
-		getGameObject().getTransform().transform(max);
+		Transform trans = getGameObject().getTransform();
+		
+		min.x = trans.getWorldScale().x * min.x;
+		min.y = trans.getWorldScale().y * min.y;
+		max.x = trans.getWorldScale().x * max.x;
+		max.y = trans.getWorldScale().y * max.y;
+		
+		min = min.add(trans.getWorldPosition());
+		max = max.add(trans.getWorldPosition());
+		//trans.transform(min);
+		//trans.transform(max);
 	}
 	
 	public boolean intersects(BoundingBox other) {
@@ -79,8 +88,8 @@ public class BoundingBox extends Collider{
 		getWorldPos(min1, max1);
 		other.getWorldPos(min2, max2);
 		
-		if( max1.x < min2.x || min1.x > max2.x ) return false;
-	    if( max1.y < min2.y || min1.y > max2.y ) return false;
+		if( max1.x <= min2.x || min1.x >= max2.x ) return false;
+	    if( max1.y <= min2.y || min1.y >= max2.y ) return false;
 		return true;
 		
 	}

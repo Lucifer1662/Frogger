@@ -5,7 +5,7 @@ import GameEngine.GameObject;
 import GameEngine.Sprite;
 
 public class Frog extends GameObject {
-	private static final String frogImageLocation = "assets/frog.png";
+	private static final String frogImageLocation = "assets/grass.png";
 	private final float width = 0.5f, height = 0.5f;
 	
 	public Frog() {

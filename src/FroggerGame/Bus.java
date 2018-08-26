@@ -5,7 +5,7 @@ import GameEngine.GameObject;
 import GameEngine.Sprite;
 
 public class Bus extends GameObject {
-	private static final String busImageLocation = "assets/bus.png";
+	private static final String busImageLocation = "assets/grass.png";
 	private final float width = 0.5f, height = 0.5f;
 	
 	public Bus() {

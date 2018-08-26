@@ -17,19 +17,19 @@ public class FroggerGame extends Game {
 		mainLevel.getCamera().SetOrthographicSize(getWidow(), 21);
 		mainLevel.getCamera().SetPoistion(0, 21/2.0f);
 		
-		HighWayRow highWay = new HighWayRow();
+		/*HighWayRow highWay = new HighWayRow();
 		highWay.setScene(mainLevel);
 		highWay.getTransform().setPosition(0, 2);
 		FroggerRow row = new FroggerRow("assets/grass.png");
 		row.setScene(mainLevel);
-		
+		*/
 		Frog frog = new Frog();
 		frog.setScene(mainLevel);
 		frog.getTransform().setPosition(0,0);
 		
 		
-		//Bus bus = new Bus();
-		//bus.setScene(mainLevel);
+		Bus bus = new Bus();
+		bus.setScene(mainLevel);
 		
 		SetCurrentScene(mainLevel);
 	}

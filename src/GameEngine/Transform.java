@@ -1,7 +1,6 @@
 package GameEngine;
 import java.nio.FloatBuffer;
 
-import org.lwjgl.util.vector.Matrix2f;
 import org.lwjgl.util.vector.Matrix3f;
 import org.lwjgl.util.vector.Vector3f;
 import org.newdawn.slick.geom.Vector2f;
@@ -18,6 +17,7 @@ public class Transform extends Component{
 		private float rotation;
 		private Vector2f scale;
 		private Vector2f worldPosition;
+		private Vector2f worldScale;
 
 		
 		public Transform(Vector2f pos, Vector2f scale, float angleOfRotation){
@@ -29,17 +29,19 @@ public class Transform extends Component{
 		
 		
 		public Transform(){
-			InitializeProperties();			
+			InitializeProperties();	
+			scale(1,1);
 		}
 		
 		private void InitializeProperties() {
 			position = new Vector2f();
-			scale = new Vector2f();
+			scale = new Vector2f(1,1);
 			translationMat = new Matrix3f();
 			rotationMat = new Matrix3f();
 			scaleMat = new Matrix3f();
 			transformMat = new Matrix3f();	
 			worldPosition = new Vector2f();
+			worldScale = new Vector2f(1,1);
 		}
 		
 		
@@ -55,6 +57,9 @@ public class Transform extends Component{
 		public Vector2f getWorldPosition() {
 			return new Vector2f(worldPosition);
 		}
+		public Vector2f getWorldScale() {
+			return new Vector2f(worldScale);
+		}
 		
 		
 		public void UpdateTransformationMatrix() {
@@ -63,7 +68,17 @@ public class Transform extends Component{
 			if(getGameObject().getParent() != null) {
 				Transform parentTransform = getGameObject().getParent().getTransform();
 				Matrix3f.mul(parentTransform.transformMat, transformMat, transformMat);
-				worldPosition = parentTransform.worldPosition.add(position);
+				//worldPosition = parentTransform.worldPosition.add(position);
+				worldScale.x = parentTransform.worldScale.x * scale.x;
+				worldScale.y = parentTransform.worldScale.y * scale.y;
+				worldPosition.x =parentTransform.worldPosition.x + position.x * worldScale.x; 
+				worldPosition.y =parentTransform.worldPosition.y + position.y * worldScale.y; 
+			
+			}else {
+				worldScale.x = scale.x;
+				worldScale.y = scale.y;
+				worldPosition.x = position.x;
+				worldPosition.y = position.y;
 			}
 			for(GameObject child : getGameObject().getChildren()) {
 				child.getTransform().UpdateTransformationMatrix();
@@ -86,8 +101,11 @@ public class Transform extends Component{
 		}
 		
 		public void setPosition(float posx, float posy) {
-			translate(posx, posy);
-			UpdateTransformationMatrix();
+			if(Float.compare(posx, position.x)!=0 
+			|| Float.compare(posy, position.y)!=0) {
+				translate(posx, posy);
+				UpdateTransformationMatrix();
+			}
 		}
 		
 		private void translate(float posx, float posy) {
@@ -106,8 +124,11 @@ public class Transform extends Component{
 		}
 		
 		public void setScale(float scalex, float scaley) {
-			scale(scalex, scaley);			
-			UpdateTransformationMatrix();
+			if(Float.compare(scalex, scale.x)!=0 
+			|| Float.compare(scaley, scale.y)!=0) {
+				scale(scalex, scaley);			
+				UpdateTransformationMatrix();
+			}
 		}
 		
 		private void scale(float scalex, float scaley) {
@@ -120,8 +141,10 @@ public class Transform extends Component{
 		
 		
 		public void setRotation(float angle) {
-			rotate(angle);
-			UpdateTransformationMatrix();
+			if(Float.compare(angle, rotation)!=0) {
+				rotate(angle);
+				UpdateTransformationMatrix();
+			}
 		}
 		
 		private void rotate(float angle) {
