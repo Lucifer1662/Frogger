@@ -8,25 +8,25 @@ import org.newdawn.slick.geom.Vector2f;
 import GameEngine.Collision.ColliderSpace;
 
 public abstract class Scene{
-	private WorldRoot worldRoot;
+	private Camera camera;
 	private ColliderSpace colliderSpace;
 	
 	Game game;
 	
 	public Scene(Game game) {
 		this.game = game;
-		worldRoot = new WorldRoot(this, null);
+		camera = new Camera(this, null);
 		colliderSpace = new ColliderSpace();
 	}
 	
 
 	final void _render() throws SlickException {
-		worldRoot._render();
+		camera._render();
 		render();
 	}
 
 	final void _update() throws SlickException {
-		worldRoot._update();
+		camera._update();
 		colliderSpace.testCollision();
 		update();
 	}
@@ -38,7 +38,7 @@ public abstract class Scene{
 	
 	
 	public final GameObject Instantiate(float posx, float posy, float scalex, float scaley, float angleOfRotation) {
-		return new GameObject(this, worldRoot, posx, posy, scalex, scaley, angleOfRotation);
+		return new GameObject(this, camera, posx, posy, scalex, scaley, angleOfRotation);
 	}
 	
 	public final GameObject Instantiate(Vector2f pos, Vector2f scale, float angleOfRotation) {
@@ -49,8 +49,8 @@ public abstract class Scene{
 		return Instantiate(posx, posy,1, 1, 0);
 	}
 	
-	public WorldRoot getWorldRoot() {
-		return worldRoot;
+	public Camera getCamera() {
+		return camera;
 	}
 
 	public Game getGame() {

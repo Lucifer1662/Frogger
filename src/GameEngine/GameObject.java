@@ -145,7 +145,7 @@ public class GameObject implements ICollision, IOnRootChanged {
 		//Changing parent to a new world root
 		//is equivalent to swapping scenes
 		if(scene != null)
-			setParent(scene.getWorldRoot());
+			setParent(scene.getCamera());
 		
 		//Change scene,and change into scenes window
 		this.scene = scene;

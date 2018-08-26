@@ -18,9 +18,6 @@ public class FrogComponent extends Component {
 		Vector2f pos = getGameObject().getTransform().getPosition();
 		pos = input.GetMovenent().add(pos);
 		getGameObject().getTransform().setPosition(pos);
-	
-		float r = getGameObject().getTransform().getRotation();
-		getGameObject().getTransform().setRotation(r + 0.03f);
 	}
 	
 	@Override

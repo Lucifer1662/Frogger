@@ -14,6 +14,15 @@ public class FroggerGame extends Game {
 	@Override
 	public void onStart() {
 		MainLevelScene mainLevel = new MainLevelScene(this);
+		mainLevel.getCamera().SetOrthographicSize(getWidow(), 21);
+		mainLevel.getCamera().SetPoistion(0, 21/2.0f);
+		
+		HighWayRow highWay = new HighWayRow();
+		highWay.setScene(mainLevel);
+		highWay.getTransform().setPosition(0, 2);
+		FroggerRow row = new FroggerRow("assets/grass.png");
+		row.setScene(mainLevel);
+		
 		Frog frog = new Frog();
 		frog.setScene(mainLevel);
 		frog.getTransform().setPosition(0,0);
@@ -30,7 +39,7 @@ public class FroggerGame extends Game {
 	public static void main(String[] args) {
 		try {			
 			Window window = new Window(new FroggerGame());
-			window.setDisplayMode(600, 600, false);
+			window.setDisplayMode(800, 600, false);
 			window.setVSync(true);
 			window.start();
 			
