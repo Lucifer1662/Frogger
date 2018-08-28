@@ -41,13 +41,13 @@ public class Game extends BasicGame {
 	
 	@Override
 	public final void render(GameContainer container, Graphics graphics) throws SlickException {
-		currentScene._render();
+		currentScene.render();
 		onDraw();
 	}
 	
 	@Override
 	public final void update(GameContainer container, int timeDeltaInMilliSeconds) throws SlickException {
-		currentScene._update();
+		currentScene.update();
 		timeDelta = timeDeltaInMilliSeconds * MILLISECONDS_IN_A_SECOND;
 		onUpdate();
 	}

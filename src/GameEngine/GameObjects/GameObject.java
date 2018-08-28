@@ -1,24 +1,46 @@
-package GameEngine;
+package GameEngine.GameObjects;
+import java.awt.AWTEvent;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
+
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import GameEngine.Collision.Collider;
-import GameEngine.Collision.ICollision;
+import GameEngine.Game;
+import GameEngine.Scene;
+import GameEngine.Window;
+import GameEngine.Components.Collider;
+import GameEngine.Components.Component;
+import GameEngine.Components.Transform;
+import GameEngine.CoreInterfaces.IOnRootChanged;
+import GameEngine.CoreInterfaces.OnCollideable;
+import GameEngine.CoreInterfaces.Renderable;
+import GameEngine.CoreInterfaces.Updateable;
 
-public class GameObject implements ICollision, IOnRootChanged {
+public class GameObject implements OnCollideable, IOnRootChanged, Updateable, Renderable {
 	ArrayList<Component> components;
-	private ArrayList<GameObject> children;
+	private List<GameObject> children;
 	private GameObject parent;
 	private Transform transform;
 	private Scene scene;
-	private Window window;
 
+	private List<Updateable> updateables;
+	private List<Renderable> renderables;
+	private List<OnCollideable> onColliderables;
 	
 	public <T extends Component> T AddComponent(T component) {
-		components.add(component);
 		component.setGameObjectAttachedTo(this);
+		if(component instanceof Updateable)
+			updateables.add((Updateable)component);
+		
+		if(component instanceof Renderable)
+			renderables.add((Renderable)component);
+		
+		if(component instanceof OnCollideable)
+			onColliderables.add((OnCollideable)component);
+		
 		return component;
 	}
 	
@@ -42,12 +64,15 @@ public class GameObject implements ICollision, IOnRootChanged {
 	public GameObject() {
 		children = new ArrayList<GameObject>();
 		components = new ArrayList<Component>();
-		transform = this.AddComponent(new Transform());
+		renderables = new ArrayList<Renderable>();
+		updateables = new ArrayList<Updateable>();
+		onColliderables = new ArrayList<OnCollideable>();
+		transform = new Transform();
+		transform.setGameObjectAttachedTo(this);
 	}
 	
 	public GameObject(Scene scene, GameObject parent){
 		this();
-		window = scene.getGame().getWidow();
 		this.scene = scene;
 		setParent(parent);
 	}	
@@ -64,41 +89,35 @@ public class GameObject implements ICollision, IOnRootChanged {
 	}
 
 	
-	
-	public final void _render() throws SlickException {
+	@Override
+	public void render() {
 		//Render the parent components first so that are on the bottom
 		//of the children		
-		for(Component component : components)	
-			component.render();
+		for(Renderable renderable : renderables)	
+			renderable.render();
 		
 		for(GameObject gameObject : children)	
-			gameObject._render();
-		
-		render();
+			gameObject.render();
 	}
 
-
-	public final void _update() throws SlickException {
-		for(Component component : components)	
-			component.update();
-
+	@Override
+	public void update() {
+		for(Updateable updateable : updateables)	
+			updateable.update();
+	
 		for(GameObject gameObject : children)	
-			gameObject._update();
+			gameObject.update();
 
-		update();
 	}
 	
 	@Override
 	public void onCollision(Collider collider) {
-		for(Component component : components)
-			component.onCollision(collider);
+		for(OnCollideable onColliderable : onColliderables)
+			onColliderable.onCollision(collider);
 		
 		for(GameObject gameObject : children)
 			gameObject.onCollision(collider);
 	}
-	
-	public void render() throws SlickException {}
-	public void update() throws SlickException {}
 
 	public GameObject getParent() {
 		return parent;
@@ -139,9 +158,16 @@ public class GameObject implements ICollision, IOnRootChanged {
 	public Scene getScene() {
 		return scene;
 	}
-	public Window getWindow() {
-		return window;
+	public Game getGame() {
+		return getScene().getGame();
 	}
+	public Window getWindow() {
+		return getScene().getWindow();
+	}
+	public Input getInput() {
+		return getScene().getInput();
+	}
+	
 	
 	public void setScene(Scene scene) {
 		//Changing parent to a new world root
@@ -151,7 +177,6 @@ public class GameObject implements ICollision, IOnRootChanged {
 		
 		//Change scene,and change into scenes window
 		this.scene = scene;
-		this.window = scene.getGame().getWidow();
 	}
 
 	public static boolean canGetScene(GameObject obj) {

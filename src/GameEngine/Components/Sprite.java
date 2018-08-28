@@ -1,13 +1,12 @@
-package GameEngine;
+package GameEngine.Components;
 
-import java.nio.FloatBuffer;
-
-import org.lwjgl.util.vector.Matrix2f;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-public class Sprite extends Component {
+import GameEngine.CoreInterfaces.Renderable;
+
+public class Sprite extends Component implements Renderable {
 	private float width = 0.5f, height = 0.5f;
 	private Image image;
 	private boolean isPixelPerfect;
@@ -23,7 +22,7 @@ public class Sprite extends Component {
 	}
 	float angle = 0;
 	@Override
-	public void render() throws SlickException {
+	public void render() {
 		if(image != null) {
 			Vector2f pos1 = new Vector2f(-width, height);	
 			Vector2f pos2 = new Vector2f(-width,-height);

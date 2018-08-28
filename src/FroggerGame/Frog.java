@@ -1,11 +1,11 @@
 package FroggerGame;
 
-import GameEngine.BoundingBox;
-import GameEngine.GameObject;
-import GameEngine.Sprite;
+import GameEngine.Components.BoundingBox;
+import GameEngine.Components.Sprite;
+import GameEngine.GameObjects.GameObject;
 
 public class Frog extends GameObject {
-	private static final String frogImageLocation = "assets/grass.png";
+	private static final String frogImageLocation = "assets/frog.png";
 	private final float width = 0.5f, height = 0.5f;
 	
 	public Frog() {

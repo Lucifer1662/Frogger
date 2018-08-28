@@ -1,7 +1,9 @@
-package GameEngine.Collision;
+package GameEngine;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import GameEngine.Components.Collider;
 
 public class ColliderSpace{
 	private List<Collider> colliders;
@@ -25,10 +27,10 @@ public class ColliderSpace{
 		}
 	}
 	
-	void remove(Collider col) {
+	public void remove(Collider col) {
 		colliders.remove(col);
 	}
-	void add(Collider col) {
+	public void add(Collider col) {
 		colliders.add(col);
 	}
 }

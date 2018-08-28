@@ -14,7 +14,7 @@ public class SceneLoadedFromFile extends Scene {
 	}
 	
 	@Override
-	public void init() {
-		LoadScene();
+	public void load() {
+		
 	}
 }

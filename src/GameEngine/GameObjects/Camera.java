@@ -1,6 +1,9 @@
-package GameEngine;
+package GameEngine.GameObjects;
 
 import org.newdawn.slick.geom.Vector2f;
+
+import GameEngine.Scene;
+import GameEngine.Window;
 
 public class Camera extends GameObject {
 	private float orthographicSize = 10;

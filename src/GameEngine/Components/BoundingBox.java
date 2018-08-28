@@ -3,11 +3,9 @@
  * by Eleanor McMurtry, University of Melbourne
  * Edited by Luke Hawkins on 26/8/2018
  */
-package GameEngine;
+package GameEngine.Components;
 
 import org.newdawn.slick.geom.Vector2f;
-
-import GameEngine.Collision.Collider;
 
 public class BoundingBox extends Collider{
 	private float left, top, width, height;

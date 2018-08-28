@@ -1,11 +1,10 @@
 package GameEngine;
 
-import java.util.List;
-
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Vector2f;
 
-import GameEngine.Collision.ColliderSpace;
+import GameEngine.GameObjects.Camera;
+import GameEngine.GameObjects.GameObject;
 
 public abstract class Scene{
 	private Camera camera;
@@ -20,22 +19,16 @@ public abstract class Scene{
 	}
 	
 
-	final void _render() throws SlickException {
-		camera._render();
-		render();
+	public void render() {
+		camera.render();
 	}
 
-	final void _update() throws SlickException {
-		camera._update();
+	public void update() {
+		camera.update();
 		colliderSpace.testCollision();
-		update();
 	}
 	
-	public void init() throws SlickException {}
-	public void render() throws SlickException {}
-	public void update() throws SlickException {}
-	
-	
+	public void load() {}
 	
 	public final GameObject Instantiate(float posx, float posy, float scalex, float scaley, float angleOfRotation) {
 		return new GameObject(this, camera, posx, posy, scalex, scaley, angleOfRotation);
@@ -55,6 +48,12 @@ public abstract class Scene{
 
 	public Game getGame() {
 		return game;
+	}
+	public Window getWindow() {
+		return game.getWidow();
+	}
+	public Input getInput() {
+		return getWindow().getInput();
 	}
 	public void setGame(Game game) {
 		game.RemoveScene(this);

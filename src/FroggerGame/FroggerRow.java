@@ -1,6 +1,6 @@
 package FroggerGame;
-import GameEngine.GameObject;
-import GameEngine.Sprite;
+import GameEngine.Components.Sprite;
+import GameEngine.GameObjects.GameObject;
 
 public class FroggerRow extends GameObject{
 	private static final int rowLength = 21;

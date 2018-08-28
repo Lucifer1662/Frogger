@@ -1,9 +1,11 @@
-package GameEngine;
+package GameEngine.Components;
 import java.nio.FloatBuffer;
 
 import org.lwjgl.util.vector.Matrix3f;
 import org.lwjgl.util.vector.Vector3f;
 import org.newdawn.slick.geom.Vector2f;
+
+import GameEngine.GameObjects.GameObject;
 
 
 public class Transform extends Component{

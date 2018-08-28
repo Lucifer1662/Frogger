@@ -1,17 +1,11 @@
-package GameEngine.Collision;
+package GameEngine.Components;
 
-import GameEngine.Component;
-import GameEngine.GameObject;
+import GameEngine.GameObjects.GameObject;
 
 public abstract class Collider extends Component{
 	public Collider() {
 		if(GameObject.canGetScene(getGameObject()))
-			getGameObject().getScene().getColliderSpace().add(this);
-	}
-	
-	@Override
-	public void finalize() {
-		getGameObject().getScene().getColliderSpace().remove(this);
+			getScene().getColliderSpace().add(this);
 	}
 	
 	
@@ -24,7 +18,7 @@ public abstract class Collider extends Component{
 	@Override
 	public void onRootChanged(GameObject gameObject) {
 		if(GameObject.canGetScene(gameObject) && GameObject.canGetScene(getGameObject())) {
-			if(gameObject.getScene() == getGameObject().getScene())
+			if(gameObject.getScene() == this.getScene())
 				return;
 		}
 		removeFromCurrentColliderSpace();

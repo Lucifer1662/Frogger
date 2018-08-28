@@ -1,12 +1,13 @@
 package FroggerGame;
 
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import GameEngine.Component;
-import GameEngine.Collision.Collider;
+import GameEngine.Components.Collider;
+import GameEngine.Components.Component;
+import GameEngine.CoreInterfaces.OnCollideable;
+import GameEngine.CoreInterfaces.Updateable;
 
-public class FrogComponent extends Component {
+public class FrogComponent extends Component implements Updateable, OnCollideable{
 	FrogInput input;
 	
 	public FrogComponent(FrogInput input) {
@@ -14,7 +15,7 @@ public class FrogComponent extends Component {
 	}
 	
 	@Override
-	public void update() throws SlickException {
+	public void update() {
 		Vector2f pos = getGameObject().getTransform().getPosition();
 		pos = input.GetMovenent().add(pos);
 		getGameObject().getTransform().setPosition(pos);

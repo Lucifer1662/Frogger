@@ -4,8 +4,8 @@ Add BusController
 
 Add Collision
 
-Take Sprite out of frog component
-Remove Bus, implement raw sprite
+Add interfact render, update, oncollision
+
 Implement BackGround
 
 
