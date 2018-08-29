@@ -14,14 +14,24 @@ public class ObstactleMovement extends Component implements Updateable {
 		this.lengthUntilOffScreen = lengthUntilOffScreen;
 	}
 	
+	public ObstactleMovement() {}
+	
 	@Override
 	public void update() {
 		Vector2f pos = getGameObject().getTransform().getPosition();
-		pos.x += speed * getGameObject().getScene().getGame().getTimeDelta();
-		getGameObject().getTransform().setPosition(pos);
+		pos.x += speed *getGame().getTimeDelta();
+		float maxDistance = getScene().getCamera().getOrthographicSize()/2.0f
+				+ lengthUntilOffScreen;
 		if(speed > 0) {
-			
+			if(pos.x > maxDistance) {
+				pos.x = -maxDistance;
+			}
+		}else {
+			if(pos.x < -maxDistance) {
+				pos.x = maxDistance;
+			}
 		}
+		getGameObject().getTransform().setPosition(pos);
 	}
 	
 	public float getSpeed() {
@@ -34,7 +44,8 @@ public class ObstactleMovement extends Component implements Updateable {
 		return lengthUntilOffScreen;
 	}
 	public void setlengthUntilOffScreen(float lengthUntilOffScreen) {
-		this.lengthUntilOffScreen = lengthUntilOffScreen;
+		if(lengthUntilOffScreen > 0)
+			this.lengthUntilOffScreen = lengthUntilOffScreen;
 	}
 	
 }

@@ -28,10 +28,14 @@ public class Camera extends GameObject {
 		SetPoistion(pos.x, pos.y);
 	}
 	
-	public final void SetOrthographicSize(Window window, float size) {
+	public void SetOrthographicSize(Window window, float size) {
 		orthographicSize = size;
 		float scale = window.getWidth()/size;
 		getTransform().setScale(scale, -scale);
+	}
+	
+	public float getOrthographicSize() {
+		return orthographicSize;
 	}
 	
 }

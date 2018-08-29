@@ -1,11 +1,8 @@
 package GameEngine.GameObjects;
-import java.awt.AWTEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
 import GameEngine.Game;
@@ -15,11 +12,13 @@ import GameEngine.Components.Collider;
 import GameEngine.Components.Component;
 import GameEngine.Components.Transform;
 import GameEngine.CoreInterfaces.IOnRootChanged;
+import GameEngine.CoreInterfaces.Initializable;
 import GameEngine.CoreInterfaces.OnCollideable;
 import GameEngine.CoreInterfaces.Renderable;
 import GameEngine.CoreInterfaces.Updateable;
 
-public class GameObject implements OnCollideable, IOnRootChanged, Updateable, Renderable {
+public class GameObject implements OnCollideable, IOnRootChanged, 
+Updateable, Renderable, Initializable {
 	ArrayList<Component> components;
 	private List<GameObject> children;
 	private GameObject parent;
@@ -29,9 +28,11 @@ public class GameObject implements OnCollideable, IOnRootChanged, Updateable, Re
 	private List<Updateable> updateables;
 	private List<Renderable> renderables;
 	private List<OnCollideable> onColliderables;
+	private List<Initializable> initializables;
 	
 	public <T extends Component> T AddComponent(T component) {
 		component.setGameObjectAttachedTo(this);
+		components.add(component);
 		if(component instanceof Updateable)
 			updateables.add((Updateable)component);
 		
@@ -41,6 +42,9 @@ public class GameObject implements OnCollideable, IOnRootChanged, Updateable, Re
 		if(component instanceof OnCollideable)
 			onColliderables.add((OnCollideable)component);
 		
+		if(component instanceof Initializable)
+			initializables.add((Initializable)component);
+		
 		return component;
 	}
 	
@@ -49,11 +53,33 @@ public class GameObject implements OnCollideable, IOnRootChanged, Updateable, Re
 	}
 	
 	public boolean removeComponent(Object component){
-		return components.remove(component);
+		if(components.remove(component)) {
+			RemoveFromInterfaces(component);
+			return true;
+		}
+		return false;
 	}
 	
 	public Component removeComponent(int index){
-		return components.remove(index);
+		Component component = components.remove(index); 
+		if(component != null) {
+			RemoveFromInterfaces(component);
+		}
+		return component;
+	}
+	
+	private void RemoveFromInterfaces(Object component) {
+		if(component instanceof Updateable)
+			updateables.remove((Updateable)component);
+		
+		if(component instanceof Renderable)
+			renderables.remove((Renderable)component);
+		
+		if(component instanceof OnCollideable)
+			onColliderables.remove((OnCollideable)component);
+		
+		if(component instanceof Initializable)
+			initializables.remove((Initializable)component);
 	}
 	
 
@@ -67,18 +93,17 @@ public class GameObject implements OnCollideable, IOnRootChanged, Updateable, Re
 		renderables = new ArrayList<Renderable>();
 		updateables = new ArrayList<Updateable>();
 		onColliderables = new ArrayList<OnCollideable>();
+		initializables = new ArrayList<Initializable>();
 		transform = new Transform();
 		transform.setGameObjectAttachedTo(this);
 	}
+
 	
 	public GameObject(Scene scene, GameObject parent){
 		this();
 		this.scene = scene;
 		setParent(parent);
 	}	
-	
-
-	
 	public GameObject(Scene scene, GameObject parent, Vector2f pos, Vector2f scale, float angleOfRotation){
 		this(scene, parent, pos.x, pos.y, scale.x, scale.y, angleOfRotation);
 	}
@@ -99,6 +124,15 @@ public class GameObject implements OnCollideable, IOnRootChanged, Updateable, Re
 		for(GameObject gameObject : children)	
 			gameObject.render();
 	}
+	
+	@Override
+	public void init() {
+		for(Initializable initializable : initializables)	
+			initializable.init();
+	
+		for(GameObject gameObject : children)	
+			gameObject.init();
+	}
 
 	@Override
 	public void update() {
@@ -107,7 +141,6 @@ public class GameObject implements OnCollideable, IOnRootChanged, Updateable, Re
 	
 		for(GameObject gameObject : children)	
 			gameObject.update();
-
 	}
 	
 	@Override
@@ -141,6 +174,8 @@ public class GameObject implements OnCollideable, IOnRootChanged, Updateable, Re
 	
 	@Override
 	public void onRootChanged(GameObject root) {
+		if(parent!=null)
+			scene = parent.scene;
 		for(Component component : components)
 			component.onRootChanged(root);
 			
@@ -172,7 +207,7 @@ public class GameObject implements OnCollideable, IOnRootChanged, Updateable, Re
 	public void setScene(Scene scene) {
 		//Changing parent to a new world root
 		//is equivalent to swapping scenes
-		if(scene != null)
+		if(scene != null && scene != this.scene)
 			setParent(scene.getCamera());
 		
 		//Change scene,and change into scenes window
@@ -182,6 +217,8 @@ public class GameObject implements OnCollideable, IOnRootChanged, Updateable, Re
 	public static boolean canGetScene(GameObject obj) {
 		return obj != null && obj.getScene() != null;
 	}
+
+	
 	
 	
 	

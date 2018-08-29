@@ -10,13 +10,19 @@ public class Window extends AppGameContainer {
 	public Window(Game game) throws SlickException {
 		super(game);
 		this.game = game;
-		game.setWidow(this);
+		game.setWindow(this);
 	}
 	public Game getGame() {
 		return game;
 	}
 	public void setGame(Game game) {
 		this.game = game;
+	}
+	public float getPixelToUnit() {
+		return game.getCurrentScene().getCamera().getOrthographicSize()/getWidth();
+	}
+	public float getUnitToPixels() {
+		return getWidth()/game.getCurrentScene().getCamera().getOrthographicSize();
 	}
 
 }

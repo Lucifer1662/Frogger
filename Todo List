@@ -3,12 +3,7 @@ Make All all Methods LowerCase
 Add BusController
 
 Add Collision
-
-Add interfact render, update, oncollision
-
 Implement BackGround
-
-
 
 
 Add Entity

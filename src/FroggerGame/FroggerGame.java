@@ -12,26 +12,9 @@ public class FroggerGame extends Game {
 	}
 	
 	@Override
-	public void onStart() {
-		MainLevelScene mainLevel = new MainLevelScene(this);
-		mainLevel.getCamera().SetOrthographicSize(getWidow(), 21);
-		mainLevel.getCamera().SetPoistion(0, 21/2.0f);
-		
-		/*HighWayRow highWay = new HighWayRow();
-		highWay.setScene(mainLevel);
-		highWay.getTransform().setPosition(0, 2);
-		FroggerRow row = new FroggerRow("assets/grass.png");
-		row.setScene(mainLevel);
-		*/
-		Frog frog = new Frog();
-		frog.setScene(mainLevel);
-		frog.getTransform().setPosition(0,0);
-		
-		
-		Bus bus = new Bus();
-		bus.setScene(mainLevel);
-		
-		SetCurrentScene(mainLevel);
+	public void init() {
+		MainLevel mainLevel = new MainLevel(this);		
+		setCurrentScene(mainLevel);
 	}
 	
 	

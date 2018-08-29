@@ -3,12 +3,16 @@ package GameEngine;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Vector2f;
 
+import GameEngine.CoreInterfaces.Initializable;
+import GameEngine.CoreInterfaces.Renderable;
+import GameEngine.CoreInterfaces.Updateable;
 import GameEngine.GameObjects.Camera;
 import GameEngine.GameObjects.GameObject;
 
-public abstract class Scene{
+public abstract class Scene implements Renderable, Updateable, Initializable{
 	private Camera camera;
 	private ColliderSpace colliderSpace;
+	private boolean hasBeenInitliazed = false;
 	
 	Game game;
 	
@@ -18,17 +22,23 @@ public abstract class Scene{
 		colliderSpace = new ColliderSpace();
 	}
 	
-
+	@Override
 	public void render() {
 		camera.render();
 	}
-
+	@Override
 	public void update() {
 		camera.update();
 		colliderSpace.testCollision();
 	}
+	@Override
+	public void init() {
+		if(!hasBeenInitliazed) {
+			camera.init();
+			hasBeenInitliazed = true;
+		}
+	}
 	
-	public void load() {}
 	
 	public final GameObject Instantiate(float posx, float posy, float scalex, float scaley, float angleOfRotation) {
 		return new GameObject(this, camera, posx, posy, scalex, scaley, angleOfRotation);
@@ -56,7 +66,7 @@ public abstract class Scene{
 		return getWindow().getInput();
 	}
 	public void setGame(Game game) {
-		game.RemoveScene(this);
+		game.removeScene(this);
 		this.game = game;
 	}
 
