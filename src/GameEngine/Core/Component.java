@@ -1,13 +1,9 @@
-package GameEngine.Components;
+package GameEngine.Core;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 
 import GameEngine.Game;
 import GameEngine.Scene;
 import GameEngine.Window;
-import GameEngine.CoreInterfaces.IOnRootChanged;
-import GameEngine.CoreInterfaces.OnCollideable;
-import GameEngine.GameObjects.GameObject;
 
 public abstract class Component {
 	//gameObject is not private because i want it to be shared with GameObject
@@ -19,6 +15,7 @@ public abstract class Component {
 	
 	public Component(GameObject gameObject) {
 		this.gameObject = gameObject;
+		gameObject.AddComponent(this);
 	}
 	
 		

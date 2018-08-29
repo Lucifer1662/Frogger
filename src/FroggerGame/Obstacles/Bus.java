@@ -4,7 +4,7 @@ package FroggerGame.Obstacles;
 import GameEngine.Scene;
 import GameEngine.Components.BoundingBox;
 import GameEngine.Components.Sprite;
-import GameEngine.GameObjects.GameObject;
+import GameEngine.Core.GameObject;
 
 public class Bus extends GameObject {
 	private static final String busImageLocation = "assets/bus.png";
@@ -17,9 +17,10 @@ public class Bus extends GameObject {
 	public Bus(Scene scene, int direction) {
 		super(scene);
 		this.direction = direction;
-		AddComponent(new Sprite(this, busImageLocation, true));
-		AddComponent(new BoundingBox(this, -width, -height, 2*width, 2*height));
-		ObstactleMovement obstacleMovement = AddComponent(new ObstactleMovement(this));
+		
+		new Sprite(this, busImageLocation, true);
+		new BoundingBox(this, -width, -height, 2*width, 2*height);
+		ObstactleMovement obstacleMovement = new ObstactleMovement(this);
 		obstacleMovement.setlengthUntilOffScreen(width);
 	}
 	

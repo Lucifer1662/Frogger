@@ -7,7 +7,7 @@ package GameEngine.Components;
 
 import org.newdawn.slick.geom.Vector2f;
 
-import GameEngine.GameObjects.GameObject;
+import GameEngine.Core.GameObject;
 
 public class BoundingBox extends Collider{
 	private float left, top, width, height;

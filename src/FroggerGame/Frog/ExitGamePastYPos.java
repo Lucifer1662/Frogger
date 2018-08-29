@@ -1,8 +1,8 @@
 package FroggerGame.Frog;
 
-import GameEngine.Components.Component;
+import GameEngine.Core.Component;
+import GameEngine.Core.GameObject;
 import GameEngine.CoreInterfaces.Updateable;
-import GameEngine.GameObjects.GameObject;
 
 public class ExitGamePastYPos extends Component implements Updateable{
 	private float maxy;

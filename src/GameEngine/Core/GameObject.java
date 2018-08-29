@@ -1,4 +1,4 @@
-package GameEngine.GameObjects;
+package GameEngine.Core;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +9,6 @@ import GameEngine.Game;
 import GameEngine.Scene;
 import GameEngine.Window;
 import GameEngine.Components.Collider;
-import GameEngine.Components.Component;
 import GameEngine.Components.Transform;
 import GameEngine.CoreInterfaces.IOnRootChanged;
 import GameEngine.CoreInterfaces.Initializable;
@@ -30,7 +29,10 @@ Updateable, Renderable, Initializable {
 	private List<OnCollideable> onColliderables;
 	private List<Initializable> initializables;
 	
-	public <T extends Component> T AddComponent(T component) {
+	void AddComponent(Component component) {
+		if(component instanceof Transform)
+			return;
+	
 		components.add(component);
 		if(component instanceof Updateable)
 			updateables.add((Updateable)component);
@@ -44,7 +46,6 @@ Updateable, Renderable, Initializable {
 		if(component instanceof Initializable)
 			initializables.add((Initializable)component);
 		
-		return component;
 	}
 	
 	public ArrayList<GameObject> getChildren(){

@@ -1,6 +1,7 @@
 package GameEngine.Components;
 
-import GameEngine.GameObjects.GameObject;
+import GameEngine.Core.Component;
+import GameEngine.Core.GameObject;
 
 public abstract class Collider extends Component{
 	public Collider(GameObject gameObject) {

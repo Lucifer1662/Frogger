@@ -4,7 +4,7 @@ import java.util.concurrent.Callable;
 
 import GameEngine.Scene;
 import GameEngine.Components.Sprite;
-import GameEngine.GameObjects.GameObject;
+import GameEngine.Core.GameObject;
 
 public class FroggerRow extends GameObject{
 	private static Random random = new Random();
@@ -14,7 +14,7 @@ public class FroggerRow extends GameObject{
 		for(int i = 0; i < rowLength; i++) {
 			GameObject tile = new GameObject(scene,this);
 			tile.getTransform().setPosition(i-rowLength/2.0f + tileOffset,0);
-			tile.AddComponent(new Sprite(tile, tilePath, true));
+			new Sprite(tile, tilePath, true);
 		}
 	}
 	

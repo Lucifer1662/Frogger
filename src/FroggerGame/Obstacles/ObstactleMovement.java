@@ -2,9 +2,9 @@ package FroggerGame.Obstacles;
 
 import org.newdawn.slick.geom.Vector2f;
 
-import GameEngine.Components.Component;
+import GameEngine.Core.Component;
+import GameEngine.Core.GameObject;
 import GameEngine.CoreInterfaces.Updateable;
-import GameEngine.GameObjects.GameObject;
 
 public class ObstactleMovement extends Component implements Updateable {
 	private float speed;

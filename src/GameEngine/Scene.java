@@ -3,11 +3,11 @@ package GameEngine;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Vector2f;
 
+import GameEngine.Core.GameObject;
 import GameEngine.CoreInterfaces.Initializable;
 import GameEngine.CoreInterfaces.Renderable;
 import GameEngine.CoreInterfaces.Updateable;
 import GameEngine.GameObjects.Camera;
-import GameEngine.GameObjects.GameObject;
 
 public abstract class Scene implements Renderable, Updateable, Initializable{
 	private Camera camera;

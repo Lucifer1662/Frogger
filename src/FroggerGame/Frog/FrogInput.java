@@ -2,8 +2,8 @@ package FroggerGame.Frog;
 
 import org.newdawn.slick.geom.Vector2f;
 
-import GameEngine.Components.Component;
-import GameEngine.GameObjects.GameObject;
+import GameEngine.Core.Component;
+import GameEngine.Core.GameObject;
 
 
 public abstract class FrogInput extends Component {

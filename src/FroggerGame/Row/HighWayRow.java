@@ -3,7 +3,7 @@ import java.util.concurrent.Callable;
 
 import FroggerGame.Obstacles.Bus;
 import GameEngine.Scene;
-import GameEngine.GameObjects.GameObject;
+import GameEngine.Core.GameObject;
 
 
 public class HighWayRow extends FroggerRow {

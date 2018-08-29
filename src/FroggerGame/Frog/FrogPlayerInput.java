@@ -3,7 +3,7 @@ package FroggerGame.Frog;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Vector2f;
 
-import GameEngine.GameObjects.GameObject;
+import GameEngine.Core.GameObject;
 
 
 public class FrogPlayerInput extends FrogInput {

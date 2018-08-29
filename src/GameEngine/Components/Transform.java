@@ -5,7 +5,8 @@ import org.lwjgl.util.vector.Matrix3f;
 import org.lwjgl.util.vector.Vector3f;
 import org.newdawn.slick.geom.Vector2f;
 
-import GameEngine.GameObjects.GameObject;
+import GameEngine.Core.Component;
+import GameEngine.Core.GameObject;
 
 
 public class Transform extends Component{

@@ -4,8 +4,9 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
+import GameEngine.Core.Component;
+import GameEngine.Core.GameObject;
 import GameEngine.CoreInterfaces.Renderable;
-import GameEngine.GameObjects.GameObject;
 
 public class Sprite extends Component implements Renderable {
 	private float width = 0.5f, height = 0.5f;
