@@ -7,10 +7,13 @@ package GameEngine.Components;
 
 import org.newdawn.slick.geom.Vector2f;
 
+import GameEngine.GameObjects.GameObject;
+
 public class BoundingBox extends Collider{
 	private float left, top, width, height;
 
-	public BoundingBox(float x, float y, float width, float height) {
+	public BoundingBox(GameObject gameObject, float x, float y, float width, float height) {
+		super(gameObject);
 		this.width = width;
 		this.height = height;
 		setX(x);
@@ -18,6 +21,7 @@ public class BoundingBox extends Collider{
 	}
 
 	public BoundingBox(BoundingBox bb) {
+		super(bb.getGameObject());
 		width = bb.width;
 		height = bb.height;
 		left = bb.left;
@@ -73,8 +77,8 @@ public class BoundingBox extends Collider{
 		max.x = trans.getWorldScale().x * max.x;
 		max.y = trans.getWorldScale().y * max.y;
 		
-		min = min.add(trans.getWorldPosition());
-		max = max.add(trans.getWorldPosition());
+		min = min.add(trans.getWorldPixelPosition());
+		max = max.add(trans.getWorldPixelPosition());
 		//trans.transform(min);
 		//trans.transform(max);
 	}

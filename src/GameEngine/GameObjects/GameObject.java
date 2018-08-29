@@ -17,7 +17,7 @@ import GameEngine.CoreInterfaces.OnCollideable;
 import GameEngine.CoreInterfaces.Renderable;
 import GameEngine.CoreInterfaces.Updateable;
 
-public class GameObject implements OnCollideable, IOnRootChanged, 
+public class GameObject implements OnCollideable, 
 Updateable, Renderable, Initializable {
 	ArrayList<Component> components;
 	private List<GameObject> children;
@@ -31,7 +31,6 @@ Updateable, Renderable, Initializable {
 	private List<Initializable> initializables;
 	
 	public <T extends Component> T AddComponent(T component) {
-		component.setGameObjectAttachedTo(this);
 		components.add(component);
 		if(component instanceof Updateable)
 			updateables.add((Updateable)component);
@@ -87,17 +86,21 @@ Updateable, Renderable, Initializable {
 		return components.get(index);
 	}
 	
-	public GameObject() {
+	private GameObject() {
 		children = new ArrayList<GameObject>();
 		components = new ArrayList<Component>();
 		renderables = new ArrayList<Renderable>();
 		updateables = new ArrayList<Updateable>();
 		onColliderables = new ArrayList<OnCollideable>();
 		initializables = new ArrayList<Initializable>();
-		transform = new Transform();
-		transform.setGameObjectAttachedTo(this);
+		transform = new Transform(this);
 	}
 
+	public GameObject(Scene scene){
+		this();
+		this.scene = scene;
+		setParent(scene.getCamera());
+	}	
 	
 	public GameObject(Scene scene, GameObject parent){
 		this();
@@ -161,6 +164,7 @@ Updateable, Renderable, Initializable {
 		if(this.parent != null) 
 			this.parent.removeChild(this);
 		
+		
 		//set my new parent
 		this.parent = parent;
 		
@@ -169,18 +173,7 @@ Updateable, Renderable, Initializable {
 			parent.children.add(this);
 		}	
 		getTransform().UpdateTransformationMatrix();
-		onRootChanged(parent);
-	}
-	
-	@Override
-	public void onRootChanged(GameObject root) {
-		if(parent!=null)
-			scene = parent.scene;
-		for(Component component : components)
-			component.onRootChanged(root);
-			
-		for(GameObject gameObject : children)
-			gameObject.onRootChanged(root);
+		
 	}
 	
 	public boolean removeChild(GameObject gameObject) {
@@ -203,16 +196,6 @@ Updateable, Renderable, Initializable {
 		return getScene().getInput();
 	}
 	
-	
-	public void setScene(Scene scene) {
-		//Changing parent to a new world root
-		//is equivalent to swapping scenes
-		if(scene != null && scene != this.scene)
-			setParent(scene.getCamera());
-		
-		//Change scene,and change into scenes window
-		this.scene = scene;
-	}
 
 	public static boolean canGetScene(GameObject obj) {
 		return obj != null && obj.getScene() != null;

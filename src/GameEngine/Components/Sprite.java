@@ -5,6 +5,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
 import GameEngine.CoreInterfaces.Renderable;
+import GameEngine.GameObjects.GameObject;
 
 public class Sprite extends Component implements Renderable {
 	private float width = 0.5f, height = 0.5f;
@@ -12,12 +13,15 @@ public class Sprite extends Component implements Renderable {
 	private boolean isPixelPerfect;
 	
 	
-	public Sprite() {}
-	public Sprite(String imagePath, boolean isPixelPerfect) {
-		this(imagePath);
+	public Sprite(GameObject gameObject) {
+		super(gameObject);
+	}
+	public Sprite(GameObject gameObject, String imagePath, boolean isPixelPerfect) {
+		this(gameObject, imagePath);
 		this.isPixelPerfect = isPixelPerfect;
 	}
-	public Sprite(String imagePath) {
+	public Sprite(GameObject gameObject, String imagePath) {
+		this(gameObject);
 		setImage(imagePath);
 	}
 	float angle = 0;

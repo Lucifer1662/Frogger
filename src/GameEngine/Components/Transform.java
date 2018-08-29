@@ -22,7 +22,8 @@ public class Transform extends Component{
 		private Vector2f worldScale;
 
 		
-		public Transform(Vector2f pos, Vector2f scale, float angleOfRotation){
+		public Transform(GameObject gameObject, Vector2f pos, Vector2f scale, float angleOfRotation){
+			super(gameObject);
 			InitializeProperties();
 			setPosition(pos);
 			setScale(scale);
@@ -30,7 +31,8 @@ public class Transform extends Component{
 		}
 		
 		
-		public Transform(){
+		public Transform(GameObject gameObject){
+			super(gameObject);
 			InitializeProperties();	
 			scale(1,1);
 		}
@@ -56,7 +58,7 @@ public class Transform extends Component{
 		public float getRotation() {
 			return rotation;
 		}
-		public Vector2f getWorldPosition() {
+		public Vector2f getWorldPixelPosition() {
 			return new Vector2f(worldPosition);
 		}
 		public Vector2f getWorldScale() {
@@ -70,7 +72,7 @@ public class Transform extends Component{
 			if(getGameObject().getParent() != null) {
 				Transform parentTransform = getGameObject().getParent().getTransform();
 				Matrix3f.mul(parentTransform.transformMat, transformMat, transformMat);
-				//worldPosition = parentTransform.worldPosition.add(position);
+				
 				worldScale.x = parentTransform.worldScale.x * scale.x;
 				worldScale.y = parentTransform.worldScale.y * scale.y;
 				worldPosition.x =parentTransform.worldPosition.x + position.x * worldScale.x; 

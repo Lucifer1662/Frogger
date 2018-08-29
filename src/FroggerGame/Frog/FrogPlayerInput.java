@@ -1,11 +1,17 @@
-package FroggerGame;
+package FroggerGame.Frog;
 
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Vector2f;
 
+import GameEngine.GameObjects.GameObject;
+
 
 public class FrogPlayerInput extends FrogInput {
 	
+	public FrogPlayerInput(GameObject gameObject) {
+		super(gameObject);
+	}
+
 	@Override 
 	public Vector2f GetMovenent() {
 		Vector2f dir = new Vector2f();

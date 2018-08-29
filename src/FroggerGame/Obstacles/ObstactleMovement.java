@@ -1,20 +1,24 @@
-package FroggerGame;
+package FroggerGame.Obstacles;
 
 import org.newdawn.slick.geom.Vector2f;
 
 import GameEngine.Components.Component;
 import GameEngine.CoreInterfaces.Updateable;
+import GameEngine.GameObjects.GameObject;
 
 public class ObstactleMovement extends Component implements Updateable {
 	private float speed;
 	private float lengthUntilOffScreen;
 	
-	public ObstactleMovement(float speed, float lengthUntilOffScreen) {
+	public ObstactleMovement(GameObject gameObject, float speed, float lengthUntilOffScreen) {
+		this(gameObject);
 		this.speed = speed;
 		this.lengthUntilOffScreen = lengthUntilOffScreen;
 	}
 	
-	public ObstactleMovement() {}
+	public ObstactleMovement(GameObject gameObject) {
+		super(gameObject);
+	}
 	
 	@Override
 	public void update() {
