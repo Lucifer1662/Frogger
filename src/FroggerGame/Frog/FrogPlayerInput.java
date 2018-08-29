@@ -3,6 +3,7 @@ package FroggerGame.Frog;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Vector2f;
 
+import GameEngine.Window;
 import GameEngine.Core.GameObject;
 
 
@@ -15,7 +16,7 @@ public class FrogPlayerInput extends FrogInput {
 	@Override 
 	public Vector2f GetMovenent() {
 		Vector2f dir = new Vector2f();
-		Input input = getGameObject().getWindow().getInput();
+		Input input = Window.getWindow().getInput();
 		
 		if(input.isKeyPressed(Input.KEY_UP)) 
 			dir.y = 1;

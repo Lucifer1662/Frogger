@@ -7,6 +7,7 @@ import FroggerGame.Row.HighWayRow;
 import FroggerGame.Row.WaterRow;
 import GameEngine.Game;
 import GameEngine.Scene;
+import GameEngine.Window;
 
 public class MainLevel extends Scene{
 
@@ -16,7 +17,7 @@ public class MainLevel extends Scene{
 	public MainLevel(Game game) {
 		super(game);
 		
-		getCamera().SetOrthographicSize(getWindow(), screenWidth);
+		getCamera().SetOrthographicSize(Window.getWindow(), screenWidth);
 		getCamera().SetPoistion(0, screenWidth/2.0f + 2);
 		
 		int i=1;

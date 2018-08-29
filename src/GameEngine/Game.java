@@ -15,7 +15,6 @@ public class Game extends BasicGame implements Renderable, Updateable, Initializ
 	private Scene currentScene;
 	private float timeDelta;
 	private static int MILLISECONDS_IN_A_SECOND = 1000;
-	private Window window;
 	
 	public Game(String title) {
 		super(title);
@@ -25,22 +24,13 @@ public class Game extends BasicGame implements Renderable, Updateable, Initializ
 	public void setCurrentScene(int index) {
 		if(index > 0 && index < scenes.size()) {
 			currentScene = scenes.get(index);
-			if(getWidow() != null)
-				currentScene.init();
 		}
 	}
 	public void setCurrentScene(Scene scene) {
 		if(!scenes.contains(scene))
 			scenes.add(scene);
 		
-		currentScene = scene;
-		
-		//init scene if the game is attached to the window
-		//if not then the window will call init when
-		//the game is attached
-		if(getWidow() != null)
-			currentScene.init();
-		
+		currentScene = scene;		
 	}
 	public void addScene(Scene scene) {
 		scenes.add(scene);
@@ -66,8 +56,6 @@ public class Game extends BasicGame implements Renderable, Updateable, Initializ
 	@Override
 	public void init(GameContainer arg0) throws SlickException {
 		init();
-		if(currentScene != null)
-			currentScene.init();
 	}
 	
 	@Override
@@ -81,16 +69,7 @@ public class Game extends BasicGame implements Renderable, Updateable, Initializ
 	public float getTimeDelta() {
 		return timeDelta;
 	}
-	
-	public Window getWidow() {
-		return window;
-	}
-	
-	public void setWindow(Window window) {
-		if(this.window != null)
-			this.window.setGame(null);
-		this.window = window;
-	}
+
 	
 	public Scene getCurrentScene() {
 		return currentScene;

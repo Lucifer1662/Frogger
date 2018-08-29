@@ -6,23 +6,36 @@ import org.newdawn.slick.SlickException;
 import GameEngine.Game;
 
 public class Window extends AppGameContainer {
+	
 	private Game game;
-	public Window(Game game) throws SlickException {
+	private static Window window; 
+	
+	Window(Game game) throws SlickException {
 		super(game);
 		this.game = game;
-		game.setWindow(this);
+		window = this;
 	}
+	
+	public static Window CreateWindow(Game game) throws SlickException {
+		if(window == null)
+			window = new Window(game);
+		return window;
+	}
+	
 	public Game getGame() {
 		return game;
 	}
 	public void setGame(Game game) {
 		this.game = game;
 	}
-	public float getPixelToUnit() {
-		return game.getCurrentScene().getCamera().getOrthographicSize()/getWidth();
+	public float getPixelToUnit(Scene scene) {
+		return scene.getCamera().getOrthographicSize()/getWidth();
 	}
-	public float getUnitToPixels() {
-		return getWidth()/game.getCurrentScene().getCamera().getOrthographicSize();
+	public float getUnitToPixels(Scene scene) {
+		return getWidth()/scene.getCamera().getOrthographicSize();
 	}
 
+	public static Window getWindow() {
+		return window;
+	}
 }

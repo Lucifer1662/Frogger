@@ -21,7 +21,7 @@ public class FroggerGame extends Game {
 
 	public static void main(String[] args) {
 		try {			
-			Window window = new Window(new FroggerGame());
+			Window window = Window.CreateWindow(new FroggerGame());
 			window.setDisplayMode(800, 600, false);
 			window.setVSync(true);
 			window.start();

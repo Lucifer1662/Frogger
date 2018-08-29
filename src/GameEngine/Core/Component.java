@@ -27,13 +27,6 @@ public abstract class Component {
 	}
 	public Game getGame() {
 		return getGameObject().getGame();
-	}
-	public Window getWindow() {
-		return getGameObject().getWindow();
-	}
-	public Input getInput() {
-		return getGameObject().getInput();
-	}
-	
+	}	
 		
 }

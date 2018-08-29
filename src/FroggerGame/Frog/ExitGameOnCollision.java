@@ -1,5 +1,6 @@
 package FroggerGame.Frog;
 
+import GameEngine.Window;
 import GameEngine.Components.Collider;
 import GameEngine.Core.Component;
 import GameEngine.Core.GameObject;
@@ -13,7 +14,7 @@ public class ExitGameOnCollision extends Component implements OnCollideable {
 
 	@Override
 	public void onCollision(Collider collider) {
-			getWindow().exit();
+		Window.getWindow().exit();
 	}
 
 }

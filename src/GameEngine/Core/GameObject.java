@@ -10,14 +10,12 @@ import GameEngine.Scene;
 import GameEngine.Window;
 import GameEngine.Components.Collider;
 import GameEngine.Components.Transform;
-import GameEngine.CoreInterfaces.IOnRootChanged;
-import GameEngine.CoreInterfaces.Initializable;
 import GameEngine.CoreInterfaces.OnCollideable;
 import GameEngine.CoreInterfaces.Renderable;
 import GameEngine.CoreInterfaces.Updateable;
 
 public class GameObject implements OnCollideable, 
-Updateable, Renderable, Initializable {
+Updateable, Renderable {
 	ArrayList<Component> components;
 	private List<GameObject> children;
 	private GameObject parent;
@@ -27,7 +25,6 @@ Updateable, Renderable, Initializable {
 	private List<Updateable> updateables;
 	private List<Renderable> renderables;
 	private List<OnCollideable> onColliderables;
-	private List<Initializable> initializables;
 	
 	void AddComponent(Component component) {
 		if(component instanceof Transform)
@@ -42,9 +39,7 @@ Updateable, Renderable, Initializable {
 		
 		if(component instanceof OnCollideable)
 			onColliderables.add((OnCollideable)component);
-		
-		if(component instanceof Initializable)
-			initializables.add((Initializable)component);
+	
 		
 	}
 	
@@ -77,9 +72,6 @@ Updateable, Renderable, Initializable {
 		
 		if(component instanceof OnCollideable)
 			onColliderables.remove((OnCollideable)component);
-		
-		if(component instanceof Initializable)
-			initializables.remove((Initializable)component);
 	}
 	
 
@@ -93,7 +85,6 @@ Updateable, Renderable, Initializable {
 		renderables = new ArrayList<Renderable>();
 		updateables = new ArrayList<Updateable>();
 		onColliderables = new ArrayList<OnCollideable>();
-		initializables = new ArrayList<Initializable>();
 		transform = new Transform(this);
 	}
 
@@ -127,15 +118,6 @@ Updateable, Renderable, Initializable {
 		
 		for(GameObject gameObject : children)	
 			gameObject.render();
-	}
-	
-	@Override
-	public void init() {
-		for(Initializable initializable : initializables)	
-			initializable.init();
-	
-		for(GameObject gameObject : children)	
-			gameObject.init();
 	}
 
 	@Override
@@ -190,13 +172,6 @@ Updateable, Renderable, Initializable {
 	public Game getGame() {
 		return getScene().getGame();
 	}
-	public Window getWindow() {
-		return getScene().getWindow();
-	}
-	public Input getInput() {
-		return getScene().getInput();
-	}
-	
 
 	public static boolean canGetScene(GameObject obj) {
 		return obj != null && obj.getScene() != null;
