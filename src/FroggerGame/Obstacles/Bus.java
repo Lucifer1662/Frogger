@@ -19,7 +19,7 @@ public class Bus extends GameObject {
 		new Sprite(this, busImageLocation, true);
 		new BoundingBox(this, -width, -height, 2*width, 2*height);
 		new ObstactleMovement(this,
-				Window.getWindow().getPixelToUnit(scene) * direction * speed, width);
+				Window.getPixelToUnit(scene) * direction * speed, width);
 	}
 
 	

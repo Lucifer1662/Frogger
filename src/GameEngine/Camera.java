@@ -1,9 +1,7 @@
-package GameEngine.GameObjects;
+package GameEngine;
 
 import org.newdawn.slick.geom.Vector2f;
 
-import GameEngine.Scene;
-import GameEngine.Window;
 import GameEngine.Core.GameObject;
 
 public class Camera extends GameObject {
@@ -11,11 +9,14 @@ public class Camera extends GameObject {
 	public Camera(Scene scene, GameObject parent) {
 		super(scene, parent);
 	
+		
+		int width =  Window.getWindow().getWidth();
+		int height =  Window.getWindow().getHeight();
+		float widthOrto = width/orthographicSize;
+		
 		//Transform world root so the origin is in the middle and 
 		//screen is orthographicSize in units across in the width
-		float widthOrto = Window.getWindow().getWidth()/orthographicSize;
-		getTransform().Apply( Window.getWindow().getWidth()/2.0f, Window.getWindow().getHeight()/2.0f,
-					widthOrto, -widthOrto,0.0f);
+		getTransform().Apply(width/2.0f, height/2.0f, widthOrto, -widthOrto,0.0f);
 	}
 
 	

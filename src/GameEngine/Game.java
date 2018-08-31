@@ -10,7 +10,7 @@ import GameEngine.CoreInterfaces.Initializable;
 import GameEngine.CoreInterfaces.Renderable;
 import GameEngine.CoreInterfaces.Updateable;
 
-public class Game extends BasicGame implements Renderable, Updateable, Initializable {
+public abstract class Game extends BasicGame{
 	private ArrayList<Scene> scenes;
 	private Scene currentScene;
 	private float timeDelta;
@@ -22,10 +22,10 @@ public class Game extends BasicGame implements Renderable, Updateable, Initializ
 	}
 	
 	public void setCurrentScene(int index) {
-		if(index > 0 && index < scenes.size()) {
+		if(index > 0 && index < scenes.size())
 			currentScene = scenes.get(index);
-		}
 	}
+	
 	public void setCurrentScene(Scene scene) {
 		if(!scenes.contains(scene))
 			scenes.add(scene);
@@ -43,27 +43,13 @@ public class Game extends BasicGame implements Renderable, Updateable, Initializ
 	@Override
 	public void render(GameContainer container, Graphics graphics) throws SlickException {
 		currentScene.render();
-		render();
 	}
 	
 	@Override
 	public void update(GameContainer container, int timeDeltaInMilliSeconds) throws SlickException {
 		currentScene.update();
 		timeDelta = timeDeltaInMilliSeconds/(float)MILLISECONDS_IN_A_SECOND;
-		update();
 	}
-	
-	@Override
-	public void init(GameContainer arg0) throws SlickException {
-		init();
-	}
-	
-	@Override
-	public void render() {}
-	@Override
-	public void update() {}
-	@Override
-	public void init() {}
 	
 	
 	public float getTimeDelta() {

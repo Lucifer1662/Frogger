@@ -2,12 +2,10 @@ package GameEngine.Core;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Vector2f;
 
 import GameEngine.Game;
 import GameEngine.Scene;
-import GameEngine.Window;
 import GameEngine.Components.Collider;
 import GameEngine.Components.Transform;
 import GameEngine.CoreInterfaces.OnCollideable;
@@ -26,58 +24,7 @@ Updateable, Renderable {
 	private List<Renderable> renderables;
 	private List<OnCollideable> onColliderables;
 	
-	void AddComponent(Component component) {
-		if(component instanceof Transform)
-			return;
 	
-		components.add(component);
-		if(component instanceof Updateable)
-			updateables.add((Updateable)component);
-		
-		if(component instanceof Renderable)
-			renderables.add((Renderable)component);
-		
-		if(component instanceof OnCollideable)
-			onColliderables.add((OnCollideable)component);
-	
-		
-	}
-	
-	public ArrayList<GameObject> getChildren(){
-		return new ArrayList<GameObject>(children);
-	}
-	
-	public boolean removeComponent(Object component){
-		if(components.remove(component)) {
-			RemoveFromInterfaces(component);
-			return true;
-		}
-		return false;
-	}
-	
-	public Component removeComponent(int index){
-		Component component = components.remove(index); 
-		if(component != null) {
-			RemoveFromInterfaces(component);
-		}
-		return component;
-	}
-	
-	private void RemoveFromInterfaces(Object component) {
-		if(component instanceof Updateable)
-			updateables.remove((Updateable)component);
-		
-		if(component instanceof Renderable)
-			renderables.remove((Renderable)component);
-		
-		if(component instanceof OnCollideable)
-			onColliderables.remove((OnCollideable)component);
-	}
-	
-
-	public Component getComponent(int index) {
-		return components.get(index);
-	}
 	
 	private GameObject() {
 		children = new ArrayList<GameObject>();
@@ -107,7 +54,7 @@ Updateable, Renderable {
 		this(scene, parent);
 		transform.Apply(posx, posy, scalex,scaley, angleOfRotation);
 	}
-
+	
 	
 	@Override
 	public void render() {
@@ -137,10 +84,61 @@ Updateable, Renderable {
 		for(GameObject gameObject : children)
 			gameObject.onCollision(collider);
 	}
-
-	public GameObject getParent() {
-		return parent;
+	
+	
+	//only component can access this
+	//adds a component to the Game Object
+	void AddComponent(Component component) {
+		if(component instanceof Transform)
+			return;
+		
+		components.add(component);
+		if(component instanceof Updateable)
+			updateables.add((Updateable)component);
+			
+		if(component instanceof Renderable)
+			renderables.add((Renderable)component);
+			
+		if(component instanceof OnCollideable)
+			onColliderables.add((OnCollideable)component);
 	}
+		
+	public ArrayList<GameObject> getChildren(){
+		return new ArrayList<GameObject>(children);
+	}
+		
+	public boolean removeComponent(Object component){
+		if(components.remove(component)) {
+			removeFromInterfaces(component);
+			return true;
+		}
+		return false;
+	}
+		
+	public Component removeComponent(int index){
+		Component component = components.remove(index); 
+		if(component != null) {
+			removeFromInterfaces(component);
+		}
+		return component;
+	}
+	
+	private void removeFromInterfaces(Object component) {
+		if(component instanceof Updateable)
+			updateables.remove((Updateable)component);
+			
+		if(component instanceof Renderable)
+			renderables.remove((Renderable)component);
+			
+		if(component instanceof OnCollideable)
+			onColliderables.remove((OnCollideable)component);
+	}
+		
+
+	public Component getComponent(int index) {
+		return components.get(index);
+	}
+			
 
 	public void setParent(GameObject parent) {
 		//Remove me from old parent
@@ -155,12 +153,17 @@ Updateable, Renderable {
 		if(parent != null) {
 			parent.children.add(this);
 		}	
-		getTransform().UpdateTransformationMatrix();
 		
+		//update my transform
+		getTransform().UpdateTransformationMatrix();
 	}
 	
 	public boolean removeChild(GameObject gameObject) {
-		return children.remove(gameObject);
+		if(children.remove(gameObject)) {
+			gameObject = null;
+			return true;
+		}
+		return false;
 	}
 	
 	public Transform getTransform() {
@@ -171,6 +174,9 @@ Updateable, Renderable {
 	}
 	public Game getGame() {
 		return getScene().getGame();
+	}
+	public GameObject getParent() {
+		return parent;
 	}
 
 	public static boolean canGetScene(GameObject obj) {

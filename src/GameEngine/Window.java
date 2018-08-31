@@ -5,10 +5,14 @@ import org.newdawn.slick.SlickException;
 
 import GameEngine.Game;
 
+
+//There can only ever be 1 window
+
 public class Window extends AppGameContainer {
-	
-	private Game game;
+
 	private static Window window; 
+	private Game game;
+	
 	
 	Window(Game game) throws SlickException {
 		super(game);
@@ -23,16 +27,16 @@ public class Window extends AppGameContainer {
 	}
 	
 	public Game getGame() {
-		return game;
+		return window.game;
 	}
 	public void setGame(Game game) {
 		this.game = game;
 	}
-	public float getPixelToUnit(Scene scene) {
-		return scene.getCamera().getOrthographicSize()/getWidth();
+	public static float getPixelToUnit(Scene scene) {
+		return scene.getCamera().getOrthographicSize()/ window.getWidth();
 	}
-	public float getUnitToPixels(Scene scene) {
-		return getWidth()/scene.getCamera().getOrthographicSize();
+	public static float getUnitToPixels(Scene scene) {
+		return window.getWidth()/scene.getCamera().getOrthographicSize();
 	}
 
 	public static Window getWindow() {

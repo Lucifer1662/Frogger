@@ -1,5 +1,6 @@
 package FroggerGame;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 
 import GameEngine.Game;
@@ -12,7 +13,7 @@ public class FroggerGame extends Game {
 	}
 	
 	@Override
-	public void init() {
+	public void init(GameContainer arg0) throws SlickException {
 		MainLevel mainLevel = new MainLevel(this);		
 		setCurrentScene(mainLevel);
 	}

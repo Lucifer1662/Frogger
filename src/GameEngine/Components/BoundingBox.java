@@ -29,7 +29,7 @@ public class BoundingBox extends Collider{
 	}
 
 	/*
-	 * Sets the x and y position at the centre of the bounding box.
+	 * Sets the x and y position at the center of the bounding box.
 	 */
 	public void setX(float x) {
 		left = x - width / 2;
@@ -79,8 +79,6 @@ public class BoundingBox extends Collider{
 		
 		min = min.add(trans.getWorldPixelPosition());
 		max = max.add(trans.getWorldPixelPosition());
-		//trans.transform(min);
-		//trans.transform(max);
 	}
 	
 	public boolean intersects(BoundingBox other) {
@@ -93,7 +91,6 @@ public class BoundingBox extends Collider{
 		if( max1.x <= min2.x || min1.x >= max2.x ) return false;
 	    if( max1.y <= min2.y || min1.y >= max2.y ) return false;
 		return true;
-		
 	}
 
 	@Override

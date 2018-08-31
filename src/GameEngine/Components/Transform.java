@@ -90,6 +90,9 @@ public class Transform extends Component{
 			}
 		}
 		
+		
+		
+		
 		public void Apply(float posx, float posy, float scalex, float scaley, float angleOfRotation){
 			translate(posx,posy);
 			scale(scalex, scaley);
@@ -100,6 +103,10 @@ public class Transform extends Component{
 		public void Apply(Vector2f pos, Vector2f scale, float angleOfRotation){
 			Apply(pos.x, pos.y, scale.x, scale.y, angleOfRotation);
 		}
+		
+		
+		
+		
 		
 		public void setPosition(Vector2f pos) {
 			setPosition(pos.x, pos.y);
@@ -124,6 +131,7 @@ public class Transform extends Component{
 		
 		
 		
+		
 		public void setScale(Vector2f scale) {
 			setScale(scale.x,scale.y);
 		}
@@ -143,6 +151,9 @@ public class Transform extends Component{
 			scaleMat.loadTranspose(FloatBuffer.wrap(org.newdawn.slick.geom.Transform
 					.createScaleTransform(scalex, scaley).getMatrixPosition()));
 		}
+		
+		
+		
 		
 		
 		public void setRotation(float angle) {

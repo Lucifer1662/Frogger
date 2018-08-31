@@ -9,7 +9,7 @@ import GameEngine.Core.GameObject;
 import GameEngine.CoreInterfaces.Renderable;
 
 public class Sprite extends Component implements Renderable {
-	private float width = 0.5f, height = 0.5f;
+	private static float width = 0.5f, height = 0.5f;
 	private Image image;
 	private boolean isPixelPerfect;
 	
@@ -25,7 +25,7 @@ public class Sprite extends Component implements Renderable {
 		this(gameObject);
 		setImage(imagePath);
 	}
-	float angle = 0;
+	
 	@Override
 	public void render() {
 		if(image != null) {
@@ -77,5 +77,7 @@ public class Sprite extends Component implements Renderable {
 	public void setPixelPerfect(boolean isPixelPerfect) {
 		this.isPixelPerfect = isPixelPerfect;
 	}
+	
+	
 
 }

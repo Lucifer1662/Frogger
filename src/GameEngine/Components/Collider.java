@@ -11,5 +11,4 @@ public abstract class Collider extends Component{
 	}
 	
 	public abstract boolean testCollision(Collider col);
-	
 }
