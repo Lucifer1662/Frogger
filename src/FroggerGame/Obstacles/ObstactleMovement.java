@@ -6,37 +6,42 @@ import GameEngine.Core.Component;
 import GameEngine.Core.GameObject;
 import GameEngine.CoreInterfaces.Updateable;
 
+/*
+ * How the obstacles move
+ */
 public class ObstactleMovement extends Component implements Updateable {
 	private float speed;
 	private float lengthUntilOffScreen;
 	
 	public ObstactleMovement(GameObject gameObject, float speed, float lengthUntilOffScreen) {
-		this(gameObject);
+		super(gameObject);
 		this.speed = speed;
 		this.lengthUntilOffScreen = lengthUntilOffScreen;
 	}
 	
-	public ObstactleMovement(GameObject gameObject) {
-		super(gameObject);
-	}
 	
 	@Override
 	public void update() {
+		//get the position
 		Vector2f pos = getGameObject().getTransform().getPosition();
+		//add the speed to it * delta
 		pos.x += speed *getGame().getTimeDelta();
+		
+
 		float maxDistance = getScene().getCamera().getOrthographicSize()/2.0f
 				+ lengthUntilOffScreen;
-		if(speed > 0) {
-			if(pos.x > maxDistance) {
+		
+		//check if obstacle should go to other side of the screens
+		if(speed > 0 && pos.x > maxDistance) 
 				pos.x = -maxDistance;
-			}
-		}else {
-			if(pos.x < -maxDistance) {
+		else if(speed < 0 && pos.x < -maxDistance) 
 				pos.x = maxDistance;
-			}
-		}
+		
+		//update the position
 		getGameObject().getTransform().setPosition(pos);
 	}
+	
+	
 	
 	public float getSpeed() {
 		return speed;

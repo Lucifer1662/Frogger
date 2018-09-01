@@ -9,6 +9,10 @@ import org.newdawn.slick.geom.Vector2f;
 
 import GameEngine.Core.GameObject;
 
+/*
+ * An extension of collider, that represents a bounding box
+ * and uses the game objects world position and scale
+ */
 public class BoundingBox extends Collider{
 	private float left, top, width, height;
 
@@ -65,7 +69,10 @@ public class BoundingBox extends Collider{
 		return height;
 	}
 	
-	public void getWorldPos(Vector2f min, Vector2f max) {
+	/*
+	 * gets the world position of the two vectors
+	 */
+	private void getWorldPos(Vector2f min, Vector2f max) {
 		min.x = this.left;
 		max.x = getRight();
 		max.y = this.top;
@@ -88,6 +95,7 @@ public class BoundingBox extends Collider{
 		getWorldPos(min1, max1);
 		other.getWorldPos(min2, max2);
 		
+		//test AABB collision
 		if( max1.x <= min2.x || min1.x >= max2.x ) return false;
 	    if( max1.y <= min2.y || min1.y >= max2.y ) return false;
 		return true;
@@ -95,13 +103,16 @@ public class BoundingBox extends Collider{
 
 	@Override
 	public boolean testCollision(Collider col) {
+		//checks colliders isn't null
 		if(col == null)
 			return false;
 		
+		//checks if is boundingBox if so then checks
 		if(col instanceof BoundingBox) {
 			return intersects((BoundingBox)col);
 		}
 		
+		//if the collider is not recognized, then return false
 		return false;
 	}
 }

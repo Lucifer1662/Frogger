@@ -7,7 +7,7 @@ import GameEngine.Game;
 import GameEngine.Window;
 
 public class FroggerGame extends Game {
-	
+	private static int SCREEN_WIDTH = 1024, SCREEN_HEIGHT = 768;
 	public FroggerGame() {
 		super("Frogger");
 	}
@@ -18,12 +18,12 @@ public class FroggerGame extends Game {
 		setCurrentScene(mainLevel);
 	}
 	
-	
 
 	public static void main(String[] args) {
+		//Create Frogger Game and window
 		try {			
 			Window window = Window.CreateWindow(new FroggerGame());
-			window.setDisplayMode(800, 600, false);
+			window.setDisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT, false);
 			window.setVSync(true);
 			window.start();
 			

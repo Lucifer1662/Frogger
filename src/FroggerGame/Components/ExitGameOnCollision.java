@@ -1,12 +1,15 @@
-package FroggerGame.Frog;
+package FroggerGame.Components;
 
 import GameEngine.Window;
 import GameEngine.Components.Collider;
 import GameEngine.Core.Component;
 import GameEngine.Core.GameObject;
-import GameEngine.CoreInterfaces.OnCollideable;
+import GameEngine.CoreInterfaces.OnCollisionable;
 
-public class ExitGameOnCollision extends Component implements OnCollideable {
+/*
+ * Exits the game on collision
+ */
+public class ExitGameOnCollision extends Component implements OnCollisionable {
 
 	public ExitGameOnCollision(GameObject gameObject) {
 		super(gameObject);

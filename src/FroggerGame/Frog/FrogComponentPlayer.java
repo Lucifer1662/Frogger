@@ -6,18 +6,22 @@ import org.newdawn.slick.geom.Vector2f;
 import GameEngine.Window;
 import GameEngine.Core.GameObject;
 
-
-public class FrogPlayerInput extends FrogInput {
+/*
+ * A frog component that can be controlled by the player
+ */
+public class FrogComponentPlayer extends FrogComponent{
 	
-	public FrogPlayerInput(GameObject gameObject) {
+	public FrogComponentPlayer(GameObject gameObject) {
 		super(gameObject);
 	}
 
-	@Override 
+
+	@Override
 	public Vector2f GetMovenent() {
 		Vector2f dir = new Vector2f();
 		Input input = Window.getWindow().getInput();
 		
+		//get direction from the keys
 		if(input.isKeyPressed(Input.KEY_UP)) 
 			dir.y = 1;
 		else if(input.isKeyPressed(Input.KEY_DOWN)) 
@@ -29,4 +33,5 @@ public class FrogPlayerInput extends FrogInput {
 		
 		return dir;
 	}
+	
 }

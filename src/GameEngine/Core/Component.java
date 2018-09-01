@@ -4,7 +4,7 @@ import GameEngine.Game;
 import GameEngine.Scene;
 
 public abstract class Component {
-	private GameObject gameObject;	
+	private final GameObject gameObject;	
 	
 	public Component(GameObject gameObject) {
 		this.gameObject = gameObject;

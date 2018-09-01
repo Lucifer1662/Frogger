@@ -3,11 +3,17 @@ package GameEngine;
 import GameEngine.CoreInterfaces.Renderable;
 import GameEngine.CoreInterfaces.Updateable;
 
+/*
+ * An abstract class to extend and create 
+ * custom scenes that the game can host
+ */
+
 public abstract class Scene implements Renderable, Updateable{
+	//Every scene has a camera, and a collider space
 	private Camera camera;
 	private ColliderSpace colliderSpace;
 	
-	Game game;
+	private Game game;
 	
 	public Scene(Game game) {
 		this.game = game;
@@ -21,7 +27,9 @@ public abstract class Scene implements Renderable, Updateable{
 	}
 	@Override
 	public void update() {
+		//Update the camera first
 		camera.update();
+		//Check for collisions and call collision events
 		colliderSpace.testCollision();
 	}
 	
@@ -31,11 +39,6 @@ public abstract class Scene implements Renderable, Updateable{
 
 	public Game getGame() {
 		return game;
-	}
-	
-	public void setGame(Game game) {
-		game.removeScene(this);
-		this.game = game;
 	}
 
 	public ColliderSpace getColliderSpace() {

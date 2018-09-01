@@ -4,11 +4,16 @@ import org.newdawn.slick.geom.Vector2f;
 
 import GameEngine.Core.GameObject;
 
+/*
+ * A gameobject to act like a camera for its children when transformed
+ */
+
 public class Camera extends GameObject {
 	private float orthographicSize = 10;
+	
 	public Camera(Scene scene, GameObject parent) {
 		super(scene, parent);
-	
+		
 		
 		int width =  Window.getWindow().getWidth();
 		int height =  Window.getWindow().getHeight();
@@ -23,16 +28,17 @@ public class Camera extends GameObject {
 	public void SetPoistion(float x, float y) {
 		int width = Window.getWindow().getWidth();
 		int height = Window.getWindow().getHeight();
-		getTransform().setPosition(width/2.0f + x* orthographicSize,height/2.0f + y*orthographicSize);
+		getTransform().setPosition(width/2.0f + x* orthographicSize,
+				height/2.0f + y*orthographicSize);
 	}
 	
 	public void SetPoistion(Vector2f pos) {
 		SetPoistion(pos.x, pos.y);
 	}
 	
-	public void SetOrthographicSize(Window window, float size) {
+	public void SetOrthographicSize(float size) {
 		orthographicSize = size;
-		float scale = window.getWidth()/size;
+		float scale = Window.getWindow().getWidth()/size;
 		getTransform().setScale(scale, -scale);
 	}
 	

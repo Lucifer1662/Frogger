@@ -5,12 +5,13 @@ import java.util.List;
 
 import GameEngine.Components.Collider;
 
+/*
+ * A space to host the colliders and check if they collide
+ * and invoke the onCollision event
+ */
+
 public class ColliderSpace{
-	private List<Collider> colliders;
-	
-	public ColliderSpace() {
-		colliders = new ArrayList<Collider>();
-	}
+	private List<Collider> colliders = new ArrayList<Collider>();
 	
 	public void testCollision() {
 		Collider col1, col2;

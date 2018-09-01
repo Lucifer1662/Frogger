@@ -7,20 +7,23 @@ import GameEngine.Core.GameObject;
 
 
 public class HighWayRow extends FroggerRow {
-	static private final String imagePath = "assets/road.png";
-	public HighWayRow(Scene scene, float rowLength, int direction) {
-		super(scene, imagePath,rowLength);
+	static private final String IMAGE_FILE_PATH = "assets/road.png";
+	
+	public HighWayRow(Scene scene, float rowLength, int direction, float offset, float seperation) {
+		super(scene, IMAGE_FILE_PATH,rowLength);
 		
-		GameObject g = this;
+		GameObject gameObject = this;
 		
-		CreateObstacles(-rowLength/2, 4, 6, rowLength/2,  
+		//Create obstacles
+		CreateObstacles(-rowLength/2 + offset, seperation, rowLength/2,  
 			new Callable<Bus>() {
 			public Bus call() throws Exception { 
 				Bus bus = new Bus(scene, direction);
-				bus.setParent(g);
+				bus.setParent(gameObject);
 				return bus;
 			}
 		});
+		
 	}
 
 }

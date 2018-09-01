@@ -8,19 +8,26 @@ import GameEngine.Core.Component;
 import GameEngine.Core.GameObject;
 import GameEngine.CoreInterfaces.Renderable;
 
+/*
+ * Used to render an image onto the screen
+ * will always be 1x1 with the center being the anchor
+ * 
+ * Note: used gameObjects transform to change size and position
+ */
 public class Sprite extends Component implements Renderable {
-	private static float width = 0.5f, height = 0.5f;
+	private static float WIDTH = 0.5f, HEIGHT = 0.5f;
 	private Image image;
 	private boolean isPixelPerfect;
-	
 	
 	public Sprite(GameObject gameObject) {
 		super(gameObject);
 	}
+	
 	public Sprite(GameObject gameObject, String imagePath, boolean isPixelPerfect) {
 		this(gameObject, imagePath);
 		this.isPixelPerfect = isPixelPerfect;
 	}
+	
 	public Sprite(GameObject gameObject, String imagePath) {
 		this(gameObject);
 		setImage(imagePath);
@@ -28,19 +35,22 @@ public class Sprite extends Component implements Renderable {
 	
 	@Override
 	public void render() {
+		//check if image is not null
 		if(image != null) {
-			Vector2f pos1 = new Vector2f(-width, height);	
-			Vector2f pos2 = new Vector2f(-width,-height);
-			Vector2f pos3 = new Vector2f(width, -height);
-			Vector2f pos4 = new Vector2f(width, height);
+			//create positions
+			Vector2f pos1 = new Vector2f(-WIDTH, HEIGHT);	
+			Vector2f pos2 = new Vector2f(-WIDTH,-HEIGHT);
+			Vector2f pos3 = new Vector2f(WIDTH, -HEIGHT);
+			Vector2f pos4 = new Vector2f(WIDTH, HEIGHT);
 	
-			
+			//transform positions
 			Transform trans = getGameObject().getTransform();
 			trans.transform(pos1);
 			trans.transform(pos2);
 			trans.transform(pos3);
 			trans.transform(pos4);
 				
+			//render 
 			if(isPixelPerfect)			
 				image.drawWarped(
 					(int)pos1.x, (int)pos1.y,

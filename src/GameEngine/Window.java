@@ -8,11 +8,15 @@ import GameEngine.Game;
 
 //There can only ever be 1 window
 
+/*
+ * A window to host a game in
+ * There can only ever be 1 window
+ */
 public class Window extends AppGameContainer {
 
-	private static Window window; 
-	private Game game;
 	
+	private static Window window; 
+	private Game game;	
 	
 	Window(Game game) throws SlickException {
 		super(game);
@@ -21,6 +25,7 @@ public class Window extends AppGameContainer {
 	}
 	
 	public static Window CreateWindow(Game game) throws SlickException {
+		//Create singleton
 		if(window == null)
 			window = new Window(game);
 		return window;

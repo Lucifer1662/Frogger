@@ -8,24 +8,26 @@ import org.newdawn.slick.geom.Vector2f;
 import GameEngine.Core.Component;
 import GameEngine.Core.GameObject;
 
-
-public class Transform extends Component{
-		private Matrix3f translationMat;
-		private Matrix3f rotationMat;
-		private Matrix3f scaleMat;
-		private Matrix3f transformMat;
+/*
+ * Used by gameObject to represent position, scale and rotation
+ * and to achieve relative positions, scale and rotation
+ */
+public class Transform{
+		private Matrix3f translationMat = new Matrix3f();
+		private Matrix3f rotationMat = new Matrix3f();
+		private Matrix3f scaleMat = new Matrix3f();
+		private Matrix3f transformMat = new Matrix3f();	
+		private GameObject gameObject;
 		
-		
-		private Vector2f position;
-		private float rotation;
-		private Vector2f scale;
-		private Vector2f worldPosition;
-		private Vector2f worldScale;
+		private Vector2f position = new Vector2f();
+		private float rotation = 0;
+		private Vector2f scale = new Vector2f(1,1);
+		private Vector2f worldPosition = new Vector2f();
+		private Vector2f worldScale = new Vector2f(1,1);
 
 		
 		public Transform(GameObject gameObject, Vector2f pos, Vector2f scale, float angleOfRotation){
-			super(gameObject);
-			InitializeProperties();
+			this(gameObject);
 			setPosition(pos);
 			setScale(scale);
 			setRotation(angleOfRotation);
@@ -33,22 +35,10 @@ public class Transform extends Component{
 		
 		
 		public Transform(GameObject gameObject){
-			super(gameObject);
-			InitializeProperties();	
+			this.gameObject = gameObject;
 			scale(1,1);
 		}
-		
-		private void InitializeProperties() {
-			position = new Vector2f();
-			scale = new Vector2f(1,1);
-			translationMat = new Matrix3f();
-			rotationMat = new Matrix3f();
-			scaleMat = new Matrix3f();
-			transformMat = new Matrix3f();	
-			worldPosition = new Vector2f();
-			worldScale = new Vector2f(1,1);
-		}
-		
+
 		
 		public Vector2f getPosition() {
 			return new Vector2f(position);
@@ -66,33 +56,46 @@ public class Transform extends Component{
 			return new Vector2f(worldScale);
 		}
 		
-		
+		/*
+		 * Updates transformation matrix for itself and all of the gameObjects children,
+		 * so they are still all relative to their parents
+		 */
 		public void UpdateTransformationMatrix() {
+			//Concatenate matrices into transform
+			//transform = parentTransform * translate * rotation * scale
+			
+			//translate * rotation
 			Matrix3f.mul(translationMat, rotationMat, transformMat);
+			//translate * rotation * scale
 			Matrix3f.mul(transformMat, scaleMat, transformMat);
-			if(getGameObject().getParent() != null) {
-				Transform parentTransform = getGameObject().getParent().getTransform();
+			
+			if(gameObject.getParent() != null) {
+				Transform parentTransform = gameObject.getParent().getTransform();
+				//parentTransform * translate * rotation * scale
 				Matrix3f.mul(parentTransform.transformMat, transformMat, transformMat);
 				
+				//update world position and world scale if there is a parent
 				worldScale.x = parentTransform.worldScale.x * scale.x;
 				worldScale.y = parentTransform.worldScale.y * scale.y;
 				worldPosition.x =parentTransform.worldPosition.x + position.x * worldScale.x; 
 				worldPosition.y =parentTransform.worldPosition.y + position.y * worldScale.y; 
 			
 			}else {
+				//set world position and world scale to local position and scale
 				worldScale.x = scale.x;
 				worldScale.y = scale.y;
 				worldPosition.x = position.x;
 				worldPosition.y = position.y;
 			}
-			for(GameObject child : getGameObject().getChildren()) {
+			//update transform for children as well
+			for(GameObject child : gameObject.getChildren()) {
 				child.getTransform().UpdateTransformationMatrix();
 			}
 		}
 		
-		
-		
-		
+		/*
+		 * applies all the transformations and then updates the transformation matrix and children
+		 */
 		public void Apply(float posx, float posy, float scalex, float scaley, float angleOfRotation){
 			translate(posx,posy);
 			scale(scalex, scaley);
@@ -104,22 +107,29 @@ public class Transform extends Component{
 			Apply(pos.x, pos.y, scale.x, scale.y, angleOfRotation);
 		}
 		
-		
-		
-		
-		
+		/*
+		 * Sets the position and update transformation matrix for itself and children
+		 */
 		public void setPosition(Vector2f pos) {
 			setPosition(pos.x, pos.y);
 		}
 		
+		/*
+		 * Sets the position and update transformation matrix for itself and children
+		 */
 		public void setPosition(float posx, float posy) {
+			//does quick check to make sure something actually happens
 			if(Float.compare(posx, position.x)!=0 
 			|| Float.compare(posy, position.y)!=0) {
+				//translates and updates
 				translate(posx, posy);
 				UpdateTransformationMatrix();
 			}
 		}
 		
+		/*
+		 * Sets the position but does not update
+		 */
 		private void translate(float posx, float posy) {
 			position.x = posx;
 			position.y = posy;
@@ -131,11 +141,16 @@ public class Transform extends Component{
 		
 		
 		
-		
+		/*
+		 * Sets the scale and update transformation matrix for itself and children
+		 */
 		public void setScale(Vector2f scale) {
 			setScale(scale.x,scale.y);
 		}
 		
+		/*
+		 * Sets the scale and update transformation matrix for itself and children
+		 */
 		public void setScale(float scalex, float scaley) {
 			if(Float.compare(scalex, scale.x)!=0 
 			|| Float.compare(scaley, scale.y)!=0) {
@@ -143,7 +158,10 @@ public class Transform extends Component{
 				UpdateTransformationMatrix();
 			}
 		}
-		
+	
+		/*
+		 * Sets the scale but does not update
+		 */
 		private void scale(float scalex, float scaley) {
 			scale.x = scalex;
 			scale.y = scaley;
@@ -154,8 +172,9 @@ public class Transform extends Component{
 		
 		
 		
-		
-		
+		/*
+		 * Sets the rotation and update transformation matrix for itself and children
+		 */
 		public void setRotation(float angle) {
 			if(Float.compare(angle, rotation)!=0) {
 				rotate(angle);
@@ -163,6 +182,9 @@ public class Transform extends Component{
 			}
 		}
 		
+		/*
+		 * Sets the rotation but does not update
+		 */
 		private void rotate(float angle) {
 			rotation = angle;
 			rotationMat.loadTranspose(FloatBuffer.wrap(org.newdawn.slick.geom.Transform
@@ -170,18 +192,31 @@ public class Transform extends Component{
 		}
 
 		
-		
+		/*
+		 * transforms point by transformation matrix 
+		 * and stores the result in the same point
+		 */
 		public void transform(Vector2f point) {
+			//Converts to vector 3
 			Vector3f p = new Vector3f(point.x, point.y, 1);
+			//transform
 			Matrix3f.transform(transformMat, p, p);
+			//return
 			point.x = p.x;
 			point.y = p.y;
 		}
 		
-		public void transform(Vector2f point, Vector2f res) {
+		/*
+		 * transforms point by transformation matrix
+		 * and stores the result in result
+		 */
+		public void transform(Vector2f point, Vector2f result) {
+			//Convert to vector 3
 			Vector3f p = new Vector3f(point.x, point.y, 1);
+			//transform
 			Matrix3f.transform(transformMat, p, p);
-			res.x = p.x;
-			res.y = p.y;
+			//return
+			result.x = p.x;
+			result.y = p.y;
 		}
 	}
