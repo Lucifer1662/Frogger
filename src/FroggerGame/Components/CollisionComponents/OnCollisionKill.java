@@ -32,7 +32,8 @@ public class OnCollisionKill extends Component implements OnCollisionable {
 
 	@Override
 	public void onColliding(Collider collider) {
-		if (collider.getGameObject() instanceof Obstactle && !((Obstactle) collider.getGameObject()).isSafe()) {
+		if (collider.getGameObject() instanceof Obstactle
+				&& !((Obstactle) collider.getGameObject()).isSafe()) {
 			alive.removeLife();
 		}
 

@@ -28,7 +28,8 @@ public class BoundingBox extends Collider {
 	 * @param width      The width of the bounding box
 	 * @param height     The height of the bounding box
 	 */
-	public BoundingBox(GameObject gameObject, float x, float y, float width, float height) {
+	public BoundingBox(GameObject gameObject, float x, float y, float width,
+			float height) {
 		super(gameObject);
 		this.width = width;
 		this.height = height;
@@ -152,7 +153,8 @@ public class BoundingBox extends Collider {
 	 * @return Whether there is an intersection
 	 */
 	public boolean intersects(BoundingBox other) {
-		Vector2f min1 = new Vector2f(), min2 = new Vector2f(), max1 = new Vector2f(), max2 = new Vector2f();
+		Vector2f min1 = new Vector2f(), min2 = new Vector2f(),
+				max1 = new Vector2f(), max2 = new Vector2f();
 
 		getWorldPos(min1, max1);
 		other.getWorldPos(min2, max2);

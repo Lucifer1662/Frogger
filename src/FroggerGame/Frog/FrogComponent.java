@@ -17,12 +17,13 @@ import GameEngine.CoreInterfaces.Updateable;
 /**
  * Represents a frog behavior component that doesn't know how to move
  */
-public abstract class FrogComponent extends Component implements Updateable, ControlableMovement, OnCollisionable {
+public abstract class FrogComponent extends Component
+		implements Updateable, ControlableMovement, OnCollisionable {
 
 	private Vector2f deltaMoved;
 	private boolean collidedWithWater = false;
 
-	private static final float MIN_Y = -1;
+	private static final float MIN_Y = 2;
 
 	/**
 	 * Constructs a frog component
@@ -39,33 +40,39 @@ public abstract class FrogComponent extends Component implements Updateable, Con
 	@Override
 	public void update() {
 
-		if (collidedWithWater && !(getGameObject().getParent() instanceof RideableObstacle))
+		if (collidedWithWater && !isRiding())
 			((Frog) getGameObject()).removeLife();
 
 		// get the position
 		Vector2f pos = getGameObject().getTransform().getWorldPosition();
+		System.out.println(pos);
 		float bounding = getScene().getCamera().getOrthographicSize() / 2;
 		if (pos.x < -bounding || pos.x > bounding || pos.y < MIN_Y)
 			((Frog) getGameObject()).removeLife();
 
-		pos = getGameObject().getTransform().getPosition();
+		Vector2f posl = getGameObject().getTransform().getPosition();
 
 		Vector2f dir = GetMovenent();
+		posl.add(dir);
 		pos.add(dir);
-		// check we still in bounds and then apply position
+
+		// check we still in bounds in the world and then apply the local
+		// position
 		if (pos.x > -bounding && pos.x < bounding && pos.y >= MIN_Y) {
 			// add the movement
 			deltaMoved = dir;
 			// update position
-			getGameObject().getTransform().setPosition(pos);
+			getGameObject().getTransform().setPosition(posl);
 		} else
 			deltaMoved = new Vector2f(0, 0);
 
 	}
 
 	private void walkingThroughtSolid(GameObject gameObject) {
-		if (gameObject instanceof Obstactle && ((Obstactle) gameObject).isSolid()) {
-			getGameObject().getTransform().setPosition(getGameObject().getTransform().getPosition().sub(deltaMoved));
+		if (gameObject instanceof Obstactle
+				&& ((Obstactle) gameObject).isSolid()) {
+			getGameObject().getTransform().setPosition(getGameObject()
+					.getTransform().getPosition().sub(deltaMoved));
 		}
 	}
 
@@ -80,10 +87,14 @@ public abstract class FrogComponent extends Component implements Updateable, Con
 	public void onColliding(Collider collider) {
 
 		GameObject gameObject = collider.getGameObject();
-		if (gameObject instanceof Water && !(getGameObject().getParent() instanceof RideableObstacle)) {
+		if (gameObject instanceof Water && !isRiding()) {
 			((Frog) getGameObject()).removeLife();
 		}
 		walkingThroughtSolid(gameObject);
+	}
+
+	private boolean isRiding() {
+		return getGameObject().getParent() instanceof RideableObstacle;
 	}
 
 }

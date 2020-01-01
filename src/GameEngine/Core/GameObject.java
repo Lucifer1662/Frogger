@@ -59,8 +59,8 @@ public class GameObject implements OnCollisionable, Updateable, Renderable {
 	}
 
 	/**
-	 * Constructs a GameObject in a scene attached to a parent, at certain position,
-	 * scale and angle of rotation
+	 * Constructs a GameObject in a scene attached to a parent, at certain
+	 * position, scale and angle of rotation
 	 * 
 	 * @param scene           The scene attached to
 	 * @param parent          The parent attached to
@@ -68,13 +68,14 @@ public class GameObject implements OnCollisionable, Updateable, Renderable {
 	 * @param scale           The starting scale
 	 * @param angleOfRotation The starting angle of rotation in degrees
 	 */
-	public GameObject(Scene scene, GameObject parent, Vector2f pos, Vector2f scale, float angleOfRotation) {
+	public GameObject(Scene scene, GameObject parent, Vector2f pos,
+			Vector2f scale, float angleOfRotation) {
 		this(scene, parent, pos.x, pos.y, scale.x, scale.y, angleOfRotation);
 	}
 
 	/**
-	 * Constructs a GameObject in a scene attached to a parent, at certain position,
-	 * scale and angle of rotation
+	 * Constructs a GameObject in a scene attached to a parent, at certain
+	 * position, scale and angle of rotation
 	 * 
 	 * @param scene           The scene attached to
 	 * @param parent          The parent attached to
@@ -84,8 +85,8 @@ public class GameObject implements OnCollisionable, Updateable, Renderable {
 	 * @param scaley          The starting scale in the y direction
 	 * @param angleOfRotation The starting angle of rotation in degrees
 	 */
-	public GameObject(Scene scene, GameObject parent, float posx, float posy, float scalex, float scaley,
-			float angleOfRotation) {
+	public GameObject(Scene scene, GameObject parent, float posx, float posy,
+			float scalex, float scaley, float angleOfRotation) {
 		this(scene, parent);
 		transform.Apply(posx, posy, scalex, scaley, angleOfRotation);
 	}
@@ -118,8 +119,8 @@ public class GameObject implements OnCollisionable, Updateable, Renderable {
 	}
 
 	/**
-	 * Adds a component to the gameObject but can only and should only be accessed
-	 * by component thus default privacy
+	 * Adds a component to the gameObject but can only and should only be
+	 * accessed by component thus default privacy
 	 * 
 	 * @param component The component to be added to the GameObject
 	 */
@@ -217,7 +218,8 @@ public class GameObject implements OnCollisionable, Updateable, Renderable {
 			if (parent.getParent() == null)
 				dif = getTransform().getWorldPosition();
 			else
-				dif = getTransform().getWorldPosition().sub(parent.getTransform().getWorldPosition());
+				dif = getTransform().getWorldPosition()
+						.sub(parent.getTransform().getWorldPosition());
 		} else {
 			dif = getTransform().getWorldPosition();
 		}
@@ -303,8 +305,8 @@ public class GameObject implements OnCollisionable, Updateable, Renderable {
 	}
 
 	/**
-	 * Checks if you can get the scene of an object. Is the GameObject not null and
-	 * is the scene attached the to GameObject not null
+	 * Checks if you can get the scene of an object. Is the GameObject not null
+	 * and is the scene attached the to GameObject not null
 	 * 
 	 * @param obj The GameObject to be compared
 	 * @return Whether the scene can be gotten from the GameObject

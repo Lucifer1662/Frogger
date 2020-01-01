@@ -30,9 +30,11 @@ public class Camera extends GameObject {
 
 		// Transform world root so the origin is in the middle and
 		// screen is orthographicSize in units across in the width
-		getTransform().Apply(width / 2.0f, height / 2.0f, widthOrto, -widthOrto, 0.0f);
+		getTransform().Apply(width / 2.0f, height / 2.0f, widthOrto, -widthOrto,
+				0.0f);
 		userInterface = new UserInterfaceObject(scene, null);
-		userInterface.getTransform().Apply(width / 2.0f, height / 2.0f, widthOrto, -widthOrto, 0.0f);
+		userInterface.getTransform().Apply(width / 2.0f, height / 2.0f,
+				widthOrto, -widthOrto, 0.0f);
 	}
 
 	/**
@@ -62,7 +64,8 @@ public class Camera extends GameObject {
 	public void SetPoistion(float x, float y) {
 		int width = Window.getWindow().getWidth();
 		int height = Window.getWindow().getHeight();
-		getTransform().setPosition(width / 2.0f + x * Window.getUnitToPixels(getScene()),
+		getTransform().setPosition(
+				width / 2.0f + x * Window.getUnitToPixels(getScene()),
 				height / 2.0f + y * Window.getUnitToPixels(getScene()));
 	}
 
@@ -102,8 +105,10 @@ public class Camera extends GameObject {
 	 * @return The vertical orthographic size
 	 */
 	public float getVerticalOrthoSize() {
-		float aspect = (float) Window.getWindow().getHeight() / Window.getWindow().getWidth();
-		return orthographicSize * ((float) Window.getWindow().getHeight() / Window.getWindow().getWidth());
+		float aspect = (float) Window.getWindow().getHeight()
+				/ Window.getWindow().getWidth();
+		return orthographicSize * ((float) Window.getWindow().getHeight()
+				/ Window.getWindow().getWidth());
 
 	}
 

@@ -17,14 +17,15 @@ public class WrappingMovement extends Component implements Updateable {
 	private float lengthUntilOffScreen;
 
 	/**
-	 * Construct a wrapping movement on a parent, at a speed, and distance until off
-	 * the screen
+	 * Construct a wrapping movement on a parent, at a speed, and distance until
+	 * off the screen
 	 * 
 	 * @param gameObject           The parent
 	 * @param speed                The speed
 	 * @param lengthUntilOffScreen The distance from 0 until it wraps around
 	 */
-	public WrappingMovement(GameObject gameObject, float speed, float lengthUntilOffScreen) {
+	public WrappingMovement(GameObject gameObject, float speed,
+			float lengthUntilOffScreen) {
 		super(gameObject);
 		this.speed = speed;
 		this.lengthUntilOffScreen = lengthUntilOffScreen;
@@ -40,7 +41,8 @@ public class WrappingMovement extends Component implements Updateable {
 		// add the speed to it * delta
 		pos.x += speed * getGame().getTimeDelta();
 
-		float maxDistance = getScene().getCamera().getOrthographicSize() / 2.0f + lengthUntilOffScreen;
+		float maxDistance = getScene().getCamera().getOrthographicSize() / 2.0f
+				+ lengthUntilOffScreen;
 
 		// check if obstacle should go to other side of the screens
 		if (speed > 0 && pos.x > maxDistance)

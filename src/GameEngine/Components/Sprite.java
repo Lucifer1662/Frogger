@@ -31,14 +31,15 @@ public class Sprite extends Component implements Renderable {
 	}
 
 	/**
-	 * Constructs a sprite with its parent, loads the image from the image path and
-	 * if it is pixel perfect
+	 * Constructs a sprite with its parent, loads the image from the image path
+	 * and if it is pixel perfect
 	 * 
 	 * @param gameObject     The parent
 	 * @param imagePath      The image path from where the image will be loaded
 	 * @param isPixelPerfect If it will be renderd pixel perfect or not
 	 */
-	public Sprite(GameObject gameObject, String imagePath, boolean isPixelPerfect) {
+	public Sprite(GameObject gameObject, String imagePath,
+			boolean isPixelPerfect) {
 		this(gameObject, imagePath);
 		this.isPixelPerfect = isPixelPerfect;
 	}
@@ -55,8 +56,8 @@ public class Sprite extends Component implements Renderable {
 	}
 
 	/**
-	 * Constructs a sprite with a parent, loads the image from the image path, with
-	 * the offset (x,y), the size (width, height) and if it is pixelperfect
+	 * Constructs a sprite with a parent, loads the image from the image path,
+	 * with the offset (x,y), the size (width, height) and if it is pixelperfect
 	 * 
 	 * @param gameObject     The parent
 	 * @param imagePath      The image path from where the image will be loaded
@@ -66,15 +67,15 @@ public class Sprite extends Component implements Renderable {
 	 * @param height         The height of the sprite
 	 * @param isPixelPerfect If the sprite is pixel perfect
 	 */
-	public Sprite(GameObject gameObject, String imagePath, float x, float y, float width, float height,
-			boolean isPixelPerfect) {
+	public Sprite(GameObject gameObject, String imagePath, float x, float y,
+			float width, float height, boolean isPixelPerfect) {
 		this(gameObject, imagePath, x, y, width, height);
 		this.isPixelPerfect = isPixelPerfect;
 	}
 
 	/**
-	 * Constructs a sprite with a parent, loads the image from the image path, with
-	 * the offset (x,y), the size (width, height) and if it is pixelperfect
+	 * Constructs a sprite with a parent, loads the image from the image path,
+	 * with the offset (x,y), the size (width, height) and if it is pixelperfect
 	 * 
 	 * @param gameObject The parent
 	 * @param imagePath  The image path from where the image will be loaded
@@ -83,7 +84,8 @@ public class Sprite extends Component implements Renderable {
 	 * @param width      The width of the sprite
 	 * @param height     The height of the sprite
 	 */
-	public Sprite(GameObject gameObject, String imagePath, float x, float y, float width, float height) {
+	public Sprite(GameObject gameObject, String imagePath, float x, float y,
+			float width, float height) {
 		this(gameObject);
 		setImage(imagePath);
 		this.width = width;
@@ -122,10 +124,12 @@ public class Sprite extends Component implements Renderable {
 
 			// render
 			if (isPixelPerfect)
-				image.drawWarped((int) pos1.x, (int) pos1.y, (int) pos2.x, (int) pos2.y, (int) pos3.x, (int) pos3.y,
-						(int) pos4.x, (int) pos4.y);
+				image.drawWarped((int) pos1.x, (int) pos1.y, (int) pos2.x,
+						(int) pos2.y, (int) pos3.x, (int) pos3.y, (int) pos4.x,
+						(int) pos4.y);
 			else
-				image.drawWarped(pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y, pos4.x, pos4.y);
+				image.drawWarped(pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y,
+						pos4.x, pos4.y);
 		}
 	}
 

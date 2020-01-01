@@ -29,7 +29,8 @@ public class DisappearReappear extends Component implements Updateable {
 	 * @param visibleDuration   The visible duration
 	 * @param invisibleDuration The invisible duration
 	 */
-	public DisappearReappear(GameObject gameObject, Sprite sprite, float visibleDuration, float invisibleDuration) {
+	public DisappearReappear(GameObject gameObject, Sprite sprite,
+			float visibleDuration, float invisibleDuration) {
 		super(gameObject);
 		this.sprite = sprite;
 		this.visibleDuration = visibleDuration;

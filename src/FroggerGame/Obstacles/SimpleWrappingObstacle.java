@@ -22,10 +22,13 @@ public abstract class SimpleWrappingObstacle extends Obstactle {
 	 * @param height        The height of the obstacle
 	 * @param imageLocation The image location of the obstacle
 	 */
-	public SimpleWrappingObstacle(Scene scene, float speed, boolean isLeftToRight, float width, float height,
+	public SimpleWrappingObstacle(Scene scene, float speed,
+			boolean isLeftToRight, float width, float height,
 			String imageLocation) {
 		super(scene, width, height, imageLocation);
-		new WrappingMovement(this, Window.getPixelToUnit(scene) * speed * (isLeftToRight ? 1 : -1), width / 2);
+		new WrappingMovement(this,
+				Window.getPixelToUnit(scene) * speed * (isLeftToRight ? 1 : -1),
+				width / 2);
 	}
 
 	@Override

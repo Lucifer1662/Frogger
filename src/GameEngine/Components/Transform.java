@@ -30,15 +30,16 @@ public class Transform {
 	private Vector2f worldScale = new Vector2f(1, 1);
 
 	/**
-	 * Constructs a Transform on a GameObject with a starting position, scale and
-	 * angle of rotation
+	 * Constructs a Transform on a GameObject with a starting position, scale
+	 * and angle of rotation
 	 * 
 	 * @param gameObject      The GameObject attached to
 	 * @param pos             The position on start
 	 * @param scale           The scale on start
 	 * @param angleOfRotation The angle of rotation on start
 	 */
-	public Transform(GameObject gameObject, Vector2f pos, Vector2f scale, float angleOfRotation) {
+	public Transform(GameObject gameObject, Vector2f pos, Vector2f scale,
+			float angleOfRotation) {
 		this(gameObject);
 		setPosition(pos);
 		setScale(scale);
@@ -102,8 +103,8 @@ public class Transform {
 	}
 
 	/**
-	 * Updates transformation matrix for itself and all of the gameObjects children,
-	 * so they are still all relative to their parents
+	 * Updates transformation matrix for itself and all of the gameObjects
+	 * children, so they are still all relative to their parents
 	 */
 	public void UpdateTransformationMatrix() {
 		// Concatenate matrices into transform
@@ -118,17 +119,21 @@ public class Transform {
 		if (gameObject.getParent() != null) {
 			Transform parentTransform = gameObject.getParent().getTransform();
 			// parentTransform * translate * rotation * scale
-			Matrix3f.mul(parentTransform.transformMat, transformMat, transformMat);
+			Matrix3f.mul(parentTransform.transformMat, transformMat,
+					transformMat);
 
 			//
 			if (gameObject.getParent().getParent() != null) {
 				// update world position and world scale if there is a parent
 				worldScale.x = parentTransform.worldScale.x * scale.x;
 				worldScale.y = parentTransform.worldScale.y * scale.y;
-				worldPosition.x = parentTransform.worldPosition.x + position.x * worldScale.x;
-				worldPosition.y = parentTransform.worldPosition.y + position.y * worldScale.y;
+				worldPosition.x = parentTransform.worldPosition.x
+						+ position.x * worldScale.x;
+				worldPosition.y = parentTransform.worldPosition.y
+						+ position.y * worldScale.y;
 			} else {
-				// set world position and world scale to local position and scale
+				// set world position and world scale to local position and
+				// scale
 				worldScale.x = scale.x;
 				worldScale.y = scale.y;
 				worldPosition.x = position.x;
@@ -149,8 +154,8 @@ public class Transform {
 	}
 
 	/**
-	 * Applies all the transformations and then updates the transformation matrix
-	 * and children
+	 * Applies all the transformations and then updates the transformation
+	 * matrix and children
 	 * 
 	 * @param posx            The position in the x direction
 	 * @param posy            The position in the y direction
@@ -158,7 +163,8 @@ public class Transform {
 	 * @param scaley          The scale in the y direction
 	 * @param angleOfRotation The angle of rotation
 	 */
-	public void Apply(float posx, float posy, float scalex, float scaley, float angleOfRotation) {
+	public void Apply(float posx, float posy, float scalex, float scaley,
+			float angleOfRotation) {
 		translate(posx, posy);
 		scale(scalex, scaley);
 		rotate(angleOfRotation);
@@ -166,8 +172,8 @@ public class Transform {
 	}
 
 	/**
-	 * Applies all the transformations and then updates the transformation matrix
-	 * and children
+	 * Applies all the transformations and then updates the transformation
+	 * matrix and children
 	 * 
 	 * @param pos             The position
 	 * @param scale           The scale
@@ -189,7 +195,8 @@ public class Transform {
 	}
 
 	/**
-	 * Sets the position and update transformation matrix for itself and children
+	 * Sets the position and update transformation matrix for itself and
+	 * children
 	 * 
 	 * @param pos The position in screen space
 	 */
@@ -198,14 +205,16 @@ public class Transform {
 	}
 
 	/**
-	 * Sets the position and update transformation matrix for itself and children
+	 * Sets the position and update transformation matrix for itself and
+	 * children
 	 * 
 	 * @param posx The position to be set in the x direction
 	 * @param posy The position to be set in the y direction
 	 */
 	public void setPosition(float posx, float posy) {
 		// does quick check to make sure something actually happens
-		if (Float.compare(posx, position.x) != 0 || Float.compare(posy, position.y) != 0) {
+		if (Float.compare(posx, position.x) != 0
+				|| Float.compare(posy, position.y) != 0) {
 			// translates and updates
 			translate(posx, posy);
 			UpdateTransformationMatrix();
@@ -216,8 +225,10 @@ public class Transform {
 		position.x = posx;
 		position.y = posy;
 
-		translationMat.loadTranspose(FloatBuffer
-				.wrap(org.newdawn.slick.geom.Transform.createTranslateTransform(posx, posy).getMatrixPosition()));
+		translationMat
+				.loadTranspose(FloatBuffer.wrap(org.newdawn.slick.geom.Transform
+						.createTranslateTransform(posx, posy)
+						.getMatrixPosition()));
 	}
 
 	/**
@@ -236,7 +247,8 @@ public class Transform {
 	 * @param scaley The scale in the y direction
 	 */
 	public void setScale(float scalex, float scaley) {
-		if (Float.compare(scalex, scale.x) != 0 || Float.compare(scaley, scale.y) != 0) {
+		if (Float.compare(scalex, scale.x) != 0
+				|| Float.compare(scaley, scale.y) != 0) {
 			scale(scalex, scaley);
 			UpdateTransformationMatrix();
 		}
@@ -249,12 +261,13 @@ public class Transform {
 		scale.x = scalex;
 		scale.y = scaley;
 
-		scaleMat.loadTranspose(FloatBuffer
-				.wrap(org.newdawn.slick.geom.Transform.createScaleTransform(scalex, scaley).getMatrixPosition()));
+		scaleMat.loadTranspose(FloatBuffer.wrap(org.newdawn.slick.geom.Transform
+				.createScaleTransform(scalex, scaley).getMatrixPosition()));
 	}
 
 	/**
-	 * Sets the rotation and update transformation matrix for itself and children
+	 * Sets the rotation and update transformation matrix for itself and
+	 * children
 	 * 
 	 * @param angle The angle of rotation to be set
 	 */
@@ -270,13 +283,14 @@ public class Transform {
 	 */
 	private void rotate(float angle) {
 		rotation = angle;
-		rotationMat.loadTranspose(
-				FloatBuffer.wrap(org.newdawn.slick.geom.Transform.createRotateTransform(angle).getMatrixPosition()));
+		rotationMat
+				.loadTranspose(FloatBuffer.wrap(org.newdawn.slick.geom.Transform
+						.createRotateTransform(angle).getMatrixPosition()));
 	}
 
 	/**
-	 * Transforms point by transformation matrix and stores the result in the same
-	 * point
+	 * Transforms point by transformation matrix and stores the result in the
+	 * same point
 	 * 
 	 * @param point The point to be transformed
 	 */

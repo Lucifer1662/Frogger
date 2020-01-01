@@ -15,7 +15,8 @@ import GameEngine.CoreInterfaces.OnCollisionable;
  * @author Luke Hawkins
  *
  */
-public class OnCollisionWithFrogUpdateFrogEndManager extends Component implements OnCollisionable {
+public class OnCollisionWithFrogUpdateFrogEndManager extends Component
+		implements OnCollisionable {
 	private FrogEndManager manager;
 	private boolean frogHasCollided = false;
 
@@ -26,7 +27,8 @@ public class OnCollisionWithFrogUpdateFrogEndManager extends Component implement
 	 * @param gameObject The parent
 	 * @param manager    The manager to be notified
 	 */
-	public OnCollisionWithFrogUpdateFrogEndManager(GameObject gameObject, FrogEndManager manager) {
+	public OnCollisionWithFrogUpdateFrogEndManager(GameObject gameObject,
+			FrogEndManager manager) {
 		super(gameObject);
 		this.manager = manager;
 	}

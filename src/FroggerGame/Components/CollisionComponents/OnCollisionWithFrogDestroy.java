@@ -13,13 +13,14 @@ import GameEngine.CoreInterfaces.OnCollisionable;
  * @author lhawk
  *
  */
-public class OnCollisionWithFrogDestroy extends Component implements OnCollisionable {
+public class OnCollisionWithFrogDestroy extends Component
+		implements OnCollisionable {
 
 	/**
 	 * Constructs the on Collision with frog destroy
 	 * 
-	 * @param gameObject The parent object, that will be destroyed when collision
-	 *                   with a frog
+	 * @param gameObject The parent object, that will be destroyed when
+	 *                   collision with a frog
 	 */
 	public OnCollisionWithFrogDestroy(GameObject gameObject) {
 		super(gameObject);

@@ -20,6 +20,7 @@ public class Water extends Tile {
 	 */
 	public Water(Scene scene) {
 		super(scene, FILE_PATH);
-		new BoundingBox(this, -TILE_SIZE, -TILE_SIZE, 2 * TILE_SIZE, 2 * TILE_SIZE);
+		new BoundingBox(this, -TILE_SIZE, -TILE_SIZE, 2 * TILE_SIZE,
+				2 * TILE_SIZE);
 	}
 }

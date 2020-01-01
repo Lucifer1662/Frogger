@@ -23,7 +23,8 @@ public abstract class Obstactle extends GameObject {
 	 * @param height        The height
 	 * @param imageLocation The image location
 	 */
-	public Obstactle(Scene scene, float width, float height, String imageLocation) {
+	public Obstactle(Scene scene, float width, float height,
+			String imageLocation) {
 		super(scene);
 		new BoundingBox(this, -width / 2, -height / 2, width, height);
 		new Sprite(this, imageLocation, -width / 2, -height / 2, width, height);

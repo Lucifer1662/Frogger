@@ -60,7 +60,6 @@ public class Frog extends GameObject implements Rider, Pushable, Alive {
 	@Override
 	public void mount(GameObject carrier) {
 		setParent(carrier);
-		System.out.println("Mount: " + carrier.getClass().getName());
 	}
 
 	/**
@@ -72,9 +71,7 @@ public class Frog extends GameObject implements Rider, Pushable, Alive {
 	public void dismount(GameObject carrier) {
 		if (getParent() == carrier) {
 			setParent(getScene().getCamera());
-			System.out.println("Exit LogOn");
-		} else
-			System.out.println("Log Swap");
+		}
 	}
 
 	/**

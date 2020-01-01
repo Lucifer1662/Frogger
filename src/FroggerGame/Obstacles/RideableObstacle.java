@@ -22,7 +22,8 @@ public abstract class RideableObstacle extends Obstactle {
 	 * @param height        The height
 	 * @param imageLocation The image location
 	 */
-	public RideableObstacle(Scene scene, float width, float height, String imageLocation) {
+	public RideableObstacle(Scene scene, float width, float height,
+			String imageLocation) {
 		super(scene, width, height, imageLocation);
 		new OnCollisionAddRider(this);
 	}

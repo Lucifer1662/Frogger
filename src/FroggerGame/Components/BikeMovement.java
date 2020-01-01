@@ -21,13 +21,13 @@ public class BikeMovement extends Component implements Updateable {
 	 * @param gameObject    The parent
 	 * @param speed         The speed
 	 * @param isLeftToRight The direction
-	 * @param lowerBarrier  The distance from 0 when the bike turns around when less
-	 *                      than 0
+	 * @param lowerBarrier  The distance from 0 when the bike turns around when
+	 *                      less than 0
 	 * @param uppderBarrier The distance from 0 when the bike turns around when
 	 *                      greater than 0
 	 */
-	public BikeMovement(GameObject gameObject, float speed, boolean isLeftToRight, float lowerBarrier,
-			float uppderBarrier) {
+	public BikeMovement(GameObject gameObject, float speed,
+			boolean isLeftToRight, float lowerBarrier, float uppderBarrier) {
 		super(gameObject);
 		this.speed = speed * (isLeftToRight ? 1 : -1);
 		this.lowerBarrier = lowerBarrier;

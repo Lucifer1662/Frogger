@@ -26,14 +26,16 @@ public class FrogEndManager extends GameObject {
 		for (int i = 0; i < NUMBER_OF_FROGENDS; i++) {
 			FrogEnd frogEnd = new FrogEnd(getScene(), this);
 			frogEnd.setParent(this);
-			frogEnd.getTransform()
-					.setPosition(-getScene().getCamera().getOrthographicSize() / 2.0f + OFFSET + SPACING * i, 0);
+			frogEnd.getTransform().setPosition(
+					-getScene().getCamera().getOrthographicSize() / 2.0f
+							+ OFFSET + SPACING * i,
+					0);
 		}
 	}
 
 	/**
-	 * adds a frog end to the completed list, one all are complete the next level is
-	 * loaded
+	 * adds a frog end to the completed list, one all are complete the next
+	 * level is loaded
 	 */
 	public void addFrogEndCompleted() {
 		numOfFrogEndsCompleted++;

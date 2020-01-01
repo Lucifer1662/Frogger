@@ -17,7 +17,8 @@ import GameEngine.CoreInterfaces.Updateable;
  * @author lhawk
  *
  */
-public class ExtraLifeSpawner extends GameObject implements Updateable, OnDestroy {
+public class ExtraLifeSpawner extends GameObject
+		implements Updateable, OnDestroy {
 
 	private List<Log> logs;
 	private final static float MIN_TIME = 25, MAX_TIME = 35;
@@ -26,8 +27,8 @@ public class ExtraLifeSpawner extends GameObject implements Updateable, OnDestro
 	private boolean frogSpawned = false;
 
 	/**
-	 * Constructs an extra life spawner in a scene, with a set of logs associated
-	 * wtih
+	 * Constructs an extra life spawner in a scene, with a set of logs
+	 * associated wtih
 	 * 
 	 * @param scene The scene in
 	 * @param logs  The logs the extra life will spawn on
@@ -57,7 +58,8 @@ public class ExtraLifeSpawner extends GameObject implements Updateable, OnDestro
 	private void spawnExtraLife() {
 		if (!frogSpawned) {
 			Log log = logs.get(random.nextInt(logs.size() - 1));
-			ExtraLife life = new ExtraLife(getScene(), log.getSprite().getWidth() / 2.0f);
+			ExtraLife life = new ExtraLife(getScene(),
+					log.getSprite().getWidth() / 2.0f);
 			life.mount(log);
 			frogSpawned = true;
 			life.addNotifyOnDestroy(this);

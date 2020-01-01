@@ -18,7 +18,8 @@ import GameEngine.CoreInterfaces.OnCollisionable;
  * @author Luke Hawkins
  *
  */
-public class BullDozer extends SimpleWrappingObstacle implements OnCollisionable {
+public class BullDozer extends SimpleWrappingObstacle
+		implements OnCollisionable {
 
 	private static final String IMAGE_LOCATION = "assets/bulldozer.png";
 	// speed in pixels per second
@@ -39,7 +40,8 @@ public class BullDozer extends SimpleWrappingObstacle implements OnCollisionable
 	public void onColliding(Collider col) {
 		if (col.getGameObject() instanceof Pushable) {
 			((Pushable) col.getGameObject())
-					.push(new Vector2f(Window.getPixelToUnit(getScene()) * SPEED * getGame().getTimeDelta(), 0));
+					.push(new Vector2f(Window.getPixelToUnit(getScene()) * SPEED
+							* getGame().getTimeDelta(), 0));
 		}
 	}
 

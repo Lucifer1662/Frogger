@@ -21,8 +21,8 @@ public class UserInterfaceObject extends GameObject {
 	}
 
 	/**
-	 * Constructs a UserInterfaceObjectn and adds it to the scene with its parent
-	 * being the world
+	 * Constructs a UserInterfaceObjectn and adds it to the scene with its
+	 * parent being the world
 	 * 
 	 * @param scene The scene to be attached to the UserInterfaceObject
 	 */

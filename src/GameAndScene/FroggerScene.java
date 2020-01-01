@@ -35,9 +35,11 @@ import GameEngine.Core.GameObject;
  *
  */
 public class FroggerScene extends Scene {
-	private static final float TILE_SIZE = 48, SCREEN_WIDTH_IN_UNITS = 21, FROGEND_HEIGHT = 15;
+	private static final float TILE_SIZE = 48, SCREEN_WIDTH_IN_UNITS = 21,
+			FROGEND_HEIGHT = 15;
 	private static int FILE_POS_WIDTH = 1008, FILE_POS_HEIGHT = 768;
-	private static final String PRE_LEVEL_PATH = "assets/levels/", POST_LEVEL_PATH = ".lvl";
+	private static final String PRE_LEVEL_PATH = "assets/levels/",
+			POST_LEVEL_PATH = ".lvl";
 
 	private int currentLevel;
 	// 0 x is equivalent to pixel 512
@@ -57,8 +59,10 @@ public class FroggerScene extends Scene {
 		// set the camera dimensions and position
 		getCamera().SetOrthographicSize(SCREEN_WIDTH_IN_UNITS);
 
-		float aspect = (float) Window.getWindow().getWidth() / Window.getWindow().getHeight();
-		getCamera().SetPoistion(0, (float) (getCamera().getOrthographicSize() / 2.0 / aspect) + 1);
+		float aspect = (float) Window.getWindow().getWidth()
+				/ Window.getWindow().getHeight();
+		getCamera().SetPoistion(0,
+				(float) (getCamera().getOrthographicSize() / 2.0 / aspect) + 1);
 
 		LoadScene(PRE_LEVEL_PATH + level + POST_LEVEL_PATH);
 		FrogEndManager fm = new FrogEndManager(this);
@@ -93,7 +97,6 @@ public class FroggerScene extends Scene {
 
 	private GameObject addGameObjectToScene(String line) {
 		String splits[] = line.split(",");
-		System.out.println(line);
 
 		GameObject gameObject = null;
 		if (splits.length == 3) {
@@ -106,9 +109,6 @@ public class FroggerScene extends Scene {
 				break;
 			case "tree":
 				gameObject = new Tree(this);
-				break;
-			default:
-				System.out.println("Error: Wrong type");
 				break;
 			}
 		} else if (splits.length == 4) {
@@ -135,25 +135,26 @@ public class FroggerScene extends Scene {
 			case "bike":
 				gameObject = new Bike(this, isLeftToRight);
 				break;
-			default:
-				System.out.println("Error: Wrong type");
-				break;
 			}
 		}
 
-		float x = (Integer.parseInt(splits[1]) - FILE_POS_WIDTH / 2.0f) / TILE_SIZE + 0.5f;
-		float y = (FILE_POS_HEIGHT - (float) Integer.parseInt(splits[2])) / TILE_SIZE;
+		float x = (Integer.parseInt(splits[1]) - FILE_POS_WIDTH / 2.0f)
+				/ TILE_SIZE + 0.5f;
+		float y = (FILE_POS_HEIGHT - (float) Integer.parseInt(splits[2]))
+				/ TILE_SIZE;
 		gameObject.getTransform().setPosition(x, y);
 		return gameObject;
 	}
 
 	/**
-	 * Sets the game to get the next level or if no next level, closes the window
+	 * Sets the game to get the next level or if no next level, closes the
+	 * window
 	 */
 	public void nextLevel() {
 		currentLevel++;
 		if (currentLevel <= MAX_LEVEL) {
-			getGame().setCurrentScene(new FroggerScene(getGame(), currentLevel));
+			getGame()
+					.setCurrentScene(new FroggerScene(getGame(), currentLevel));
 		} else {
 			Window.getWindow().exit();
 		}

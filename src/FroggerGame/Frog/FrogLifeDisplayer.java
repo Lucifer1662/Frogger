@@ -42,7 +42,8 @@ public class FrogLifeDisplayer extends UserInterfaceObject {
 	@Override
 	public void update() {
 		while (numOfFrogLifeSprites < frogRef.getNumberOfLives())
-			new Sprite(this, Frog.FROG_IMAGE_LOCATION).setX(numOfFrogLifeSprites++);
+			new Sprite(this, Frog.FROG_IMAGE_LOCATION)
+					.setX(numOfFrogLifeSprites++);
 
 		while (numOfFrogLifeSprites > frogRef.getNumberOfLives())
 			this.removeComponent(--numOfFrogLifeSprites);

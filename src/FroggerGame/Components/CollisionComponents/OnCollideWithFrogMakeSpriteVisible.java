@@ -13,7 +13,8 @@ import GameEngine.CoreInterfaces.OnCollisionable;
  * @author lhawk
  *
  */
-public class OnCollideWithFrogMakeSpriteVisible extends Component implements OnCollisionable {
+public class OnCollideWithFrogMakeSpriteVisible extends Component
+		implements OnCollisionable {
 	private Sprite sprite;
 
 	/**
@@ -22,7 +23,8 @@ public class OnCollideWithFrogMakeSpriteVisible extends Component implements OnC
 	 * @param gameObject The parent
 	 * @param sprite     The sprite who's visiblity is the be set
 	 */
-	public OnCollideWithFrogMakeSpriteVisible(GameObject gameObject, Sprite sprite) {
+	public OnCollideWithFrogMakeSpriteVisible(GameObject gameObject,
+			Sprite sprite) {
 		super(gameObject);
 		this.sprite = sprite;
 	}

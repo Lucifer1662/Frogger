@@ -39,7 +39,8 @@ public class Log extends RideableWrappingObstacle {
 	 * @param height        The height of the log
 	 * @param imageLocation The image location of the image to be rendered
 	 */
-	public Log(Scene scene, float speed, boolean isLeftToRight, float width, float height, String imageLocation) {
+	public Log(Scene scene, float speed, boolean isLeftToRight, float width,
+			float height, String imageLocation) {
 		super(scene, speed, isLeftToRight, width, height, imageLocation);
 	}
 

@@ -32,7 +32,8 @@ public abstract class Game extends BasicGame {
 	 * @param graphics  The graphics of the window
 	 */
 	@Override
-	public void render(GameContainer container, Graphics graphics) throws SlickException {
+	public void render(GameContainer container, Graphics graphics)
+			throws SlickException {
 		// render the current scene
 		currentScene.render();
 	}
@@ -44,7 +45,8 @@ public abstract class Game extends BasicGame {
 	 * @param timeDeltaInMilliSeconds The change in time in milli seconds
 	 */
 	@Override
-	public void update(GameContainer container, int timeDeltaInMilliSeconds) throws SlickException {
+	public void update(GameContainer container, int timeDeltaInMilliSeconds)
+			throws SlickException {
 		// update current scene and time delta
 		currentScene.update();
 		timeDelta = timeDeltaInMilliSeconds / (float) MILLISECONDS_IN_A_SECOND;

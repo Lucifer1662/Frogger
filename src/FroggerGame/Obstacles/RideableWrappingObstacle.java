@@ -25,11 +25,14 @@ public abstract class RideableWrappingObstacle extends RideableObstacle {
 	 * @param height        The height of the obstacle
 	 * @param imageLocation The image location
 	 */
-	public RideableWrappingObstacle(Scene scene, float speed, boolean isLeftToRight, float width, float height,
+	public RideableWrappingObstacle(Scene scene, float speed,
+			boolean isLeftToRight, float width, float height,
 			String imageLocation) {
 		super(scene, width, height, imageLocation);
 		new OnCollisionAddRider(this);
-		new WrappingMovement(this, Window.getPixelToUnit(scene) * speed * (isLeftToRight ? 1 : -1), width / 2);
+		new WrappingMovement(this,
+				Window.getPixelToUnit(scene) * speed * (isLeftToRight ? 1 : -1),
+				width / 2);
 	}
 
 	@Override
